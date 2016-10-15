@@ -9,7 +9,7 @@
 
 # 1) Obtain all the data for the Bachelor students, starting from 2007. Keep only the students for which you have an entry for both Bachelor semestre 1 and Bachelor semestre 6.
 
-# In[ ]:
+# In[1]:
 
 import requests as r
 import pandas as pd
@@ -17,7 +17,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 
-# In[ ]:
+# In[2]:
 
 ISA_url = 'http://isa.epfl.ch/imoniteur_ISAP/!gedpublicreports'
 ISA_html = ISA_url + '.html'
@@ -30,7 +30,7 @@ ww_i_reportModelXsl = '133685271'  # for XLS files from Postman
 
 # In order to find all the existing parameter names and possible values, we make a request on the form page and then parse it
 
-# In[ ]:
+# In[3]:
 
 form_html = r.get(ISA_filter, params={'ww_i_reportModel': ww_i_reportModel})
 form_bs = BeautifulSoup(form_html.content, "html.parser")
@@ -38,7 +38,7 @@ form_bs = BeautifulSoup(form_html.content, "html.parser")
 
 # We parse the HTML file looking for "select" tags which correspond to the different menus, and for each of them we look at the "option" tags which are the entries. We save our results in a dictionnary
 
-# In[ ]:
+# In[4]:
 
 params = []
 
@@ -60,7 +60,7 @@ params
 
 # ### Gather the data
 
-# In[ ]:
+# In[5]:
 
 def listOf(unite, year, semester):
     # retrieve gps reference using main form query for table access
@@ -95,37 +95,37 @@ def listOf(unite, year, semester):
     
     table = tables[0]
     table.drop('Nom Prénom', axis=1, inplace=True)
-    table.drop([col for col in df.columns if 'Unnamed' in col], axis=1, inplace=True)
-    return df
+    table.drop([col for col in table.columns if 'Unnamed' in col], axis=1, inplace=True)
+    return table
 
 
 # In this homework we are interesting in students from the "Informatique" section, and we want the data as excel files. Therefore we give the following parameters fixed values:
 
-# In[ ]:
+# In[6]:
 
 unite = params.loc['ww_x_UNITE_ACAD', 'Informatique']
 unite
 
 
-# In[ ]:
+# In[7]:
 
 years = params.loc['ww_x_PERIODE_ACAD']
 years
 
 
-# In[ ]:
+# In[8]:
 
 param_semesters = params.loc['ww_x_PERIODE_PEDAGO']
 
 
-# In[ ]:
+# In[9]:
 
 # do not take into account "b" semester as there are all empty (not sure of signification)
 bachelor_semesters = param_semesters[['Bachelor' in idx and 'b' not in idx for idx in param_semesters.index]]
 bachelor_semesters
 
 
-# In[ ]:
+# In[10]:
 
 def gather(unite, years, semesters):
     yearly = []
@@ -140,40 +140,40 @@ def gather(unite, years, semesters):
     return pd.concat(yearly, keys=years.index)
 
 
-# In[ ]:
+# In[11]:
 
 bachelor = gather(unite, years, bachelor_semesters)
 
 
-# In[ ]:
+# In[12]:
 
 bachelor.head()
 
 
-# In[ ]:
+# In[13]:
 
 bachelor.to_pickle('bachelor')
 
 
-# In[ ]:
+# In[14]:
 
 master_semesters = param_semesters[['Master' in idx or 'Projet' in idx for idx in param_semesters.index]]
 master_semesters
 
 
-# In[ ]:
+# In[15]:
 
 master = gather(unite, years, master_semesters)
 
 
-# In[ ]:
+# In[16]:
 
 master.head()
 
 
-# In[ ]:
+# In[17]:
 
-master.to_pickle('bachelor')
+master.to_pickle('master')
 
 
 # In[ ]:
