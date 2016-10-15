@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>bachelor_collect</title>
+<title>isa_collect</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,7 +11751,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Gather-Bachelor-students-data">Gather Bachelor students data<a class="anchor-link" href="#Gather-Bachelor-students-data">&#182;</a></h1>
+<h1 id="Collect-isa-data">Collect isa data<a class="anchor-link" href="#Collect-isa-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11760,26 +11760,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The purpose of this script is only to collect the data of Bachelor students, group and clean it all, serialize it in order to be used by other scripts analyzing the dataset.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Assignment">Assignment<a class="anchor-link" href="#Assignment">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>1) Obtain all the data for the Bachelor students, starting from 2007. Keep only the students for which you have an entry for both Bachelor semestre 1 and Bachelor semestre 6.</p>
+<p>The purpose of this notebook is only to collect the isa data over students, group and clean it all, serialize it in order to be used by other scripts analyzing the dataset.</p>
 
 </div>
 </div>
@@ -11800,6 +11781,25 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1-General-parameters">1 General parameters<a class="anchor-link" href="#1-General-parameters">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Those data were taken out from Postman or simple network query analyzer.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
@@ -11808,8 +11808,8 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ISA_url</span> <span class="o">=</span> <span class="s1">&#39;http://isa.epfl.ch/imoniteur_ISAP/!gedpublicreports&#39;</span>
 <span class="n">ISA_html</span> <span class="o">=</span> <span class="n">ISA_url</span> <span class="o">+</span> <span class="s1">&#39;.html&#39;</span>
 <span class="n">ISA_filter</span> <span class="o">=</span> <span class="n">ISA_url</span> <span class="o">+</span> <span class="s1">&#39;.filter&#39;</span>
-<span class="n">ww_i_reportModel</span> <span class="o">=</span> <span class="s1">&#39;133685247&#39;</span>  <span class="c1"># base reference from Postman</span>
-<span class="n">ww_i_reportModelXsl</span> <span class="o">=</span> <span class="s1">&#39;133685271&#39;</span>  <span class="c1"># for XLS files from Postman</span>
+<span class="n">ww_i_reportModel</span> <span class="o">=</span> <span class="s1">&#39;133685247&#39;</span>
+<span class="n">ww_i_reportModelXsl</span> <span class="o">=</span> <span class="s1">&#39;133685271&#39;</span>
 </pre></div>
 
 </div>
@@ -11822,7 +11822,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Find-the-parameters-values">Find the parameters values<a class="anchor-link" href="#Find-the-parameters-values">&#182;</a></h3>
+<h2 id="2-Dynamic-parameters">2 Dynamic parameters<a class="anchor-link" href="#2-Dynamic-parameters">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -11831,7 +11831,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to find all the existing parameter names and possible values, we make a request on the form page and then parse it</p>
+<p>In order to find all the existing parameter names and possible values, we make a request on the form page and then parse it.</p>
 
 </div>
 </div>
@@ -11855,7 +11855,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We parse the HTML file looking for "select" tags which correspond to the different menus, and for each of them we look at the "option" tags which are the entries. We save our results in a dictionnary</p>
+<p>We parse the HTML file looking for <code>select</code> tags which correspond to the different menus, and for each of them we look at the <code>option</code> tags which are the entries.</p>
 
 </div>
 </div>
@@ -12149,70 +12149,23 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Gather-the-data">Gather the data<a class="anchor-link" href="#Gather-the-data">&#182;</a></h3>
+<h2 id="3-Select-parameters">3 Select parameters<a class="anchor-link" href="#3-Select-parameters">&#182;</a></h2>
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">listOf</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">):</span>
-    <span class="c1"># retrieve gps reference using main form query for table access</span>
-    <span class="n">gps_html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ISA_filter</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;ww_b_list&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;ww_i_reportmodel&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModel</span><span class="p">,</span>
-        <span class="s1">&#39;ww_i_reportModelXsl&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModelXsl</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_UNITE_ACAD&#39;</span><span class="p">:</span> <span class="n">unite</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_PERIODE_ACAD&#39;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_PERIODE_PEDAGO&#39;</span><span class="p">:</span> <span class="n">semester</span>
-    <span class="p">})</span>
-    <span class="n">gps_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">gps_html</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-    <span class="n">link</span> <span class="o">=</span> <span class="n">gps_bs</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">link</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    
-    <span class="c1"># isolate second link (first one is always all) and rip off useless part</span>
-    <span class="n">gps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;onclick&#39;</span><span class="p">][</span><span class="mi">21</span><span class="p">:</span><span class="o">-</span><span class="mi">16</span><span class="p">])</span>
-    <span class="n">table_html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ISA_html</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;ww_i_reportmodel&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModel</span><span class="p">,</span>
-        <span class="s1">&#39;ww_i_reportModelXsl&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModelXsl</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_UNITE_ACAD&#39;</span><span class="p">:</span> <span class="n">unite</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_PERIODE_ACAD&#39;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_PERIODE_PEDAGO&#39;</span><span class="p">:</span> <span class="n">semester</span><span class="p">,</span>
-        <span class="s1">&#39;ww_x_GPS&#39;</span><span class="p">:</span> <span class="n">gps</span>
-    <span class="p">})</span>
-    <span class="n">table_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">table_html</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-    <span class="n">tables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">table_bs</span><span class="p">),</span> <span class="n">flavor</span><span class="o">=</span><span class="s1">&#39;bs4&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    
-    <span class="n">table</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">table</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Nom Prénom&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">table</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Unnamed&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">table</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this homework we are interesting in students from the "Informatique" section, and we want the data as excel files. Therefore we give the following parameters fixed values:</p>
+<p>In this homework we are interesting in students from the "Informatique" section starting from 2007.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">unite</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ww_x_UNITE_ACAD&#39;</span><span class="p">,</span> <span class="s1">&#39;Informatique&#39;</span><span class="p">]</span>
@@ -12227,7 +12180,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12243,7 +12196,7 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">years</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ww_x_PERIODE_ACAD&#39;</span><span class="p">]</span>
@@ -12258,7 +12211,7 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12327,7 +12280,7 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">param_semesters</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ww_x_PERIODE_PEDAGO&#39;</span><span class="p">]</span>
@@ -12340,7 +12293,7 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># do not take into account &quot;b&quot; semester as there are all empty (not sure of signification)</span>
@@ -12356,7 +12309,7 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12409,20 +12362,120 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_semesters</span> <span class="o">=</span> <span class="n">param_semesters</span><span class="p">[[</span><span class="s1">&#39;Master&#39;</span> <span class="ow">in</span> <span class="n">idx</span> <span class="ow">or</span> <span class="s1">&#39;Projet&#39;</span> <span class="ow">in</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">param_semesters</span><span class="o">.</span><span class="n">index</span><span class="p">]]</span>
+<span class="n">master_semesters</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Value</th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Master semestre 1</th>
+      <td>2230106</td>
+    </tr>
+    <tr>
+      <th>Master semestre 2</th>
+      <td>942192</td>
+    </tr>
+    <tr>
+      <th>Master semestre 3</th>
+      <td>2230128</td>
+    </tr>
+    <tr>
+      <th>Master semestre 4</th>
+      <td>2230140</td>
+    </tr>
+    <tr>
+      <th>Projet Master automne</th>
+      <td>249127</td>
+    </tr>
+    <tr>
+      <th>Projet Master printemps</th>
+      <td>3781783</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Download-data">4. Download data<a class="anchor-link" href="#4.-Download-data">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gather</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">semesters</span><span class="p">):</span>
-    <span class="n">yearly</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">year_value</span> <span class="ow">in</span> <span class="n">years</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-        <span class="n">swarm</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">semester</span><span class="p">,</span> <span class="n">semester_value</span> <span class="ow">in</span> <span class="n">semesters</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">semester</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">listOf</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">year_value</span><span class="p">,</span> <span class="n">semester_value</span><span class="p">)</span>
-            <span class="n">swarm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">yearly</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">swarm</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">semesters</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">yearly</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">years</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">listOf</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">semester</span><span class="p">):</span>
+    <span class="c1"># retrieve gps reference as if we submit isa form and got list of results</span>
+    <span class="n">gps_html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ISA_filter</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;ww_b_list&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;ww_i_reportmodel&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModel</span><span class="p">,</span>
+        <span class="s1">&#39;ww_i_reportModelXsl&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModelXsl</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_UNITE_ACAD&#39;</span><span class="p">:</span> <span class="n">unite</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_PERIODE_ACAD&#39;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_PERIODE_PEDAGO&#39;</span><span class="p">:</span> <span class="n">semester</span>
+    <span class="p">})</span>
+    <span class="n">gps_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">gps_html</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">gps_bs</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">link</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="c1"># isolate second link (first one is always &quot;Tous&quot;) and rip off useless part</span>
+    <span class="n">gps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;onclick&#39;</span><span class="p">][</span><span class="mi">21</span><span class="p">:</span><span class="o">-</span><span class="mi">16</span><span class="p">])</span>
+    <span class="n">table_html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ISA_html</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;ww_i_reportmodel&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModel</span><span class="p">,</span>
+        <span class="s1">&#39;ww_i_reportModelXsl&#39;</span><span class="p">:</span> <span class="n">ww_i_reportModelXsl</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_UNITE_ACAD&#39;</span><span class="p">:</span> <span class="n">unite</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_PERIODE_ACAD&#39;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_PERIODE_PEDAGO&#39;</span><span class="p">:</span> <span class="n">semester</span><span class="p">,</span>
+        <span class="s1">&#39;ww_x_GPS&#39;</span><span class="p">:</span> <span class="n">gps</span>
+    <span class="p">})</span>
+    <span class="n">tables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">table_html</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="s1">&#39;bs4&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tables</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="c1"># get the table and remove student names (avoid the name to be indexed by Google on Github...)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Nom Prénom&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Unnamed&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">table</span>
 </pre></div>
 
 </div>
@@ -12433,6 +12486,30 @@ Name: (ww_x_UNITE_ACAD, Informatique), dtype: object</pre>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gather</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">semesters</span><span class="p">):</span>
+    <span class="c1"># loop over years and semesters and assemble them into one data frame</span>
+    <span class="n">yearly</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">year_value</span> <span class="ow">in</span> <span class="n">years</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+        <span class="n">swarm</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">semester</span><span class="p">,</span> <span class="n">semester_value</span> <span class="ow">in</span> <span class="n">semesters</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">semester</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">listOf</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">year_value</span><span class="p">,</span> <span class="n">semester_value</span><span class="p">)</span>
+            <span class="n">swarm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">yearly</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">swarm</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">semesters</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">yearly</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">years</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Semester&#39;</span><span class="p">,</span> <span class="s1">&#39;Sciper&#39;</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bachelor</span> <span class="o">=</span> <span class="n">gather</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">bachelor_semesters</span><span class="p">)</span>
@@ -12528,7 +12605,7 @@ Bachelor semestre 6
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bachelor</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -12542,7 +12619,7 @@ Bachelor semestre 6
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12561,6 +12638,20 @@ Bachelor semestre 6
       <th>Statut</th>
       <th>Type Echange</th>
       <th>Ecole Echange</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th>Semester</th>
+      <th>Sciper</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -12639,88 +12730,7 @@ Bachelor semestre 6
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bachelor</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;bachelor&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_semesters</span> <span class="o">=</span> <span class="n">param_semesters</span><span class="p">[[</span><span class="s1">&#39;Master&#39;</span> <span class="ow">in</span> <span class="n">idx</span> <span class="ow">or</span> <span class="s1">&#39;Projet&#39;</span> <span class="ow">in</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">param_semesters</span><span class="o">.</span><span class="n">index</span><span class="p">]]</span>
-<span class="n">master_semesters</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Value</th>
-    </tr>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Master semestre 1</th>
-      <td>2230106</td>
-    </tr>
-    <tr>
-      <th>Master semestre 2</th>
-      <td>942192</td>
-    </tr>
-    <tr>
-      <th>Master semestre 3</th>
-      <td>2230128</td>
-    </tr>
-    <tr>
-      <th>Master semestre 4</th>
-      <td>2230140</td>
-    </tr>
-    <tr>
-      <th>Projet Master automne</th>
-      <td>249127</td>
-    </tr>
-    <tr>
-      <th>Projet Master printemps</th>
-      <td>3781783</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">master</span> <span class="o">=</span> <span class="n">gather</span><span class="p">(</span><span class="n">unite</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="n">master_semesters</span><span class="p">)</span>
@@ -12816,7 +12826,7 @@ Projet Master printemps
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">master</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -12830,7 +12840,7 @@ Projet Master printemps
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12849,6 +12859,20 @@ Projet Master printemps
       <th>Statut</th>
       <th>Type Echange</th>
       <th>Ecole Echange</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th>Semester</th>
+      <th>Sciper</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -12925,12 +12949,21 @@ Projet Master printemps
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5-Serialize">5 Serialize<a class="anchor-link" href="#5-Serialize">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;master&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bachelor</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;bachelor&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12940,10 +12973,10 @@ Projet Master printemps
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;master&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
