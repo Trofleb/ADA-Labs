@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# # Collect isa data
+# # Assignement 0 collect data from IS Academia
 
 # The purpose of this notebook is only to collect the isa data over students, group and clean it all, serialize it in order to be used by other scripts analyzing the dataset.
 
@@ -155,6 +155,8 @@ bachelor = gather(unite, years, bachelor_semesters)
 
 # In[13]:
 
+bachelor['Civilité'] = bachelor.Civilité.astype('category')
+bachelor['Statut'] = bachelor.Statut.astype('category')
 bachelor.head()
 
 
@@ -165,6 +167,8 @@ master = gather(unite, years, master_semesters)
 
 # In[15]:
 
+master['Civilité'] = master.Civilité.astype('category')
+master['Statut'] = master.Statut.astype('category')
 master.head()
 
 
