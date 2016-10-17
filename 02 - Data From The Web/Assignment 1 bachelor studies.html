@@ -11761,6 +11761,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
 </pre></div>
 
@@ -11783,7 +11784,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Reading the pickle with the bachelor data frame</p>
+<p>Reading the pickle with the bachelor data frame.</p>
 
 </div>
 </div>
@@ -11919,7 +11920,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>All students that did semester 1 and 6</p>
+<p>All students that did semester 1 and 6, extract sciper and filter bachelor to keep only those students. A finishing student can be either "Présent" or in echange during last year.</p>
 
 </div>
 </div>
@@ -11930,16 +11931,13 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">bachelor_df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Bachelor semestre 1&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
 <span class="n">s1</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">s1</span><span class="o">.</span><span class="n">Statut</span> <span class="o">==</span> <span class="s1">&#39;Présent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">s6</span> <span class="o">=</span> <span class="n">bachelor_df</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="s1">&#39;Bachelor semestre 6&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s6</span> <span class="o">=</span> <span class="n">s6</span><span class="p">[(</span><span class="n">s6</span><span class="o">.</span><span class="n">Statut</span> <span class="o">==</span> <span class="s1">&#39;Présent&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">s6</span><span class="p">[</span><span class="s1">&#39;Type Echange&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">s6</span> <span class="o">=</span> <span class="n">s6</span><span class="p">[(</span><span class="n">s6</span><span class="o">.</span><span class="n">Statut</span> <span class="o">==</span> <span class="s1">&#39;Présent&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">s6</span><span class="o">.</span><span class="n">Statut</span> <span class="o">==</span> <span class="s1">&#39;Congé&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="n">bachelor_sciper</span> <span class="o">=</span> <span class="n">s1</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">s1</span><span class="o">.</span><span class="n">index</span> <span class="o">&amp;</span> <span class="n">s6</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-
-<span class="n">bachelor_s1_s6</span> <span class="o">=</span> <span class="n">bachelor_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bachelor_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s2">&quot;Sciper&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">bachelor_sciper</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
+<span class="n">sciper_s1_s6</span> <span class="o">=</span> <span class="n">s1</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">s1</span><span class="o">.</span><span class="n">index</span> <span class="o">&amp;</span> <span class="n">s6</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">bachelor_s1_s6</span> <span class="o">=</span> <span class="n">bachelor_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bachelor_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s2">&quot;Sciper&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">sciper_s1_s6</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
 
 <span class="n">bachelor_s1_s6</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -12075,7 +12073,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's find how many semesters each student spent for to get its Bachelor. To do we iterate over all the scipers and count the number of status (that includes semesters in Erasmus exchange and 'off semesters' as well):</p>
+<p>Let's find how many semesters each student spent for to get its Bachelor. To do we iterate over all the scipers and count the number of status (that includes semesters in Erasmus exchange and 'off semesters' as well).</p>
 
 </div>
 </div>
@@ -12107,7 +12105,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We now group the results by the 'Civilité' and average the number of semesters</p>
+<p>We now group the results by the 'Civilité' and average the number of semesters.</p>
 
 </div>
 </div>
@@ -12175,7 +12173,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Perform-a-&quot;hypothesis-testing&quot;-test-(p-test)">Perform a "hypothesis testing" test (p-test)<a class="anchor-link" href="#Perform-a-&quot;hypothesis-testing&quot;-test-(p-test)">&#182;</a></h2>
+<h2 id="Perform-a-&quot;hypothesis-testing&quot;-test">Perform a "hypothesis testing" test<a class="anchor-link" href="#Perform-a-&quot;hypothesis-testing&quot;-test">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -12184,8 +12182,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Our null hypothethis H0 is that the difference between the two means is insignificant, mean(f) = mean(m). 
-We select our alpha = 0.05 in order to be sure at 95%.</p>
+<p>Our null hypothethis H0 is that the difference between the two means is statistically insignificant. Using "Two-Sample T-Test" based on our two sample population, we select our alpha to be 0.05 in order to be sure at 95% with no assumption concerning the variance.</p>
 
 </div>
 </div>
@@ -12195,16 +12192,14 @@ We select our alpha = 0.05 in order to be sure at 95%.</p>
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">female_sems_num</span> <span class="o">=</span> <span class="n">bachelor_semesters</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;Civilité == &quot;Madame&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;Number of semesters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">men_sems_mean</span> <span class="o">=</span> <span class="n">sems_stats</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Mean number of semesters&#39;</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">female_sems_num</span><span class="p">,</span> <span class="n">men_sems_mean</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">male_sems_num</span> <span class="o">=</span> <span class="n">bachelor_semesters</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;Civilité == &quot;Monsieur&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;Number of semesters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">female_sems_num</span> <span class="o">=</span> <span class="n">bachelor_semesters</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;Civilité == &quot;Madame&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;Number of semesters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
 <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">female_sems_num</span><span class="p">,</span> <span class="n">men_sems_mean</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">male_sems_num</span><span class="p">,</span> <span class="n">female_sems_num</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test p-value = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">test</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The means are statistically different&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">&lt;</span> <span class="n">alpha</span> <span class="k">else</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The means are statistically equal&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">test</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;statistically &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;different&quot;</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">&lt;</span> <span class="n">alpha</span> <span class="k">else</span> <span class="s2">&quot;similar&quot;</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12217,10 +12212,8 @@ We select our alpha = 0.05 in order to be sure at 95%.</p>
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[ 9  6  8 11  9  6  6  6  6  6  8  8  7  6  6  6  6  6  6  6  8  9  6  6  6
-  6  6  4  4] 6.90489130435
-test p-value = 0.383335
-The means are statistically equal
+<pre>p-value = 0.403779
+statistically similar
 </pre>
 </div>
 </div>
@@ -12239,19 +12232,6 @@ One caveat in this test is the population of female students (24) which is prett
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>

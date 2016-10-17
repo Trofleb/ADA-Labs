@@ -6,12 +6,13 @@
 # In[1]:
 
 import pandas as pd
+import numpy as np
 import scipy.stats as stats
 
 
 # ## Import Bachelor data
 
-# Reading the pickle with the bachelor data frame
+# Reading the pickle with the bachelor data frame.
 
 # In[2]:
 
@@ -19,28 +20,25 @@ bachelor_df = pd.read_pickle("bachelor")
 bachelor_df.head()
 
 
-# All students that did semester 1 and 6
+# All students that did semester 1 and 6, extract sciper and filter bachelor to keep only those students. A finishing student can be either "Présent" or in echange during last year.
 
 # In[3]:
 
 s1 = bachelor_df.xs('Bachelor semestre 1', level=1)
-
 s1 = s1[s1.Statut == 'Présent'].reset_index(0)
 
 s6 = bachelor_df.xs('Bachelor semestre 6', level=1)
+s6 = s6[(s6.Statut == 'Présent') | (s6['Type Echange'] != np.nan)].reset_index(0)
 
-s6 = s6[(s6.Statut == 'Présent') | (s6.Statut == 'Congé')].reset_index(0)
-
-bachelor_sciper = s1.ix[s1.index & s6.index].index
-
-bachelor_s1_s6 = bachelor_df.loc[bachelor_df.index.get_level_values("Sciper").isin(bachelor_sciper.values)]
+sciper_s1_s6 = s1.ix[s1.index & s6.index].index
+bachelor_s1_s6 = bachelor_df.loc[bachelor_df.index.get_level_values("Sciper").isin(sciper_s1_s6.values)]
 
 bachelor_s1_s6.head()
 
 
 # ## Compute the number and the mean of semesters spent for the Bachelor by gender
 
-# Let's find how many semesters each student spent for to get its Bachelor. To do we iterate over all the scipers and count the number of status (that includes semesters in Erasmus exchange and 'off semesters' as well):
+# Let's find how many semesters each student spent for to get its Bachelor. To do we iterate over all the scipers and count the number of status (that includes semesters in Erasmus exchange and 'off semesters' as well).
 
 # In[4]:
 
@@ -56,7 +54,7 @@ for sciper in scipers:
 bachelor_semesters = pd.DataFrame(bachelor_semesters,columns=['Sciper', 'Civilité', 'Number of semesters'])
 
 
-# We now group the results by the 'Civilité' and average the number of semesters 
+# We now group the results by the 'Civilité' and average the number of semesters.
 
 # In[5]:
 
@@ -66,29 +64,21 @@ sems_stats = pd.concat([gender_count,sems_mean], axis=1, keys=['Count','Mean num
 sems_stats
 
 
-# ## Perform a "hypothesis testing" test (p-test)
+# ## Perform a "hypothesis testing" test
 
-# Our null hypothethis H0 is that the difference between the two means is insignificant, mean(f) = mean(m). 
-# We select our alpha = 0.05 in order to be sure at 95%.
+# Our null hypothethis H0 is that the difference between the two means is statistically insignificant. Using "Two-Sample T-Test" based on our two sample population, we select our alpha to be 0.05 in order to be sure at 95% with no assumption concerning the variance.
 
 # In[6]:
 
+male_sems_num = bachelor_semesters.query('Civilité == "Monsieur"')['Number of semesters'].values
 female_sems_num = bachelor_semesters.query('Civilité == "Madame"')['Number of semesters'].values
-men_sems_mean = sems_stats.iloc[1]['Mean number of semesters']
-
-print(female_sems_num, men_sems_mean)
 
 alpha = 0.05
-test = stats.ttest_1samp(female_sems_num, men_sems_mean)
+test = stats.ttest_ind(male_sems_num, female_sems_num, equal_var=False)
 
-print("test p-value = %f" % test.pvalue)
-print("The means are statistically different") if test.pvalue < alpha else print("The means are statistically equal")
+print("p-value = %f" % test.pvalue)
+print("statistically " + ("different" if test.pvalue < alpha else "similar"))
 
 
 # Since our test p-value is greater than the alpha chosen we cannot reject our null hypothesis, meaning that both mean are statistically identicals.
 # One caveat in this test is the population of female students (24) which is pretty low.
-
-# In[ ]:
-
-
-
