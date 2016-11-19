@@ -1,2 +1,2 @@
-# ADA-Labs
+DA-Labs
 Applied Data Analysis laboratories
