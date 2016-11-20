@@ -263,7 +263,7 @@ ax.set_ylabel('Frequency of dyads')
 ax.set_xlim([-3,160]) # a hack so we can see the first point most clearly
 
 
-# In[41]:
+# In[27]:
 
 # Histogram of country frequency. 
 fig, ax = plt.subplots(1,1,figsize=(12, 4))
@@ -354,7 +354,7 @@ df_filtered = dfc[["playerShort","club", "leagueCountry", "height", "weight", "p
                  "rater1", "rater2", "meanIAT", "seIAT", "meanExp", "seExp"]]
 
 
-# In[42]:
+# In[38]:
 
 df_grouped = df_filtered.groupby("playerShort").agg({
         "club": lambda x: x.unique()[0],
@@ -380,13 +380,13 @@ df_grouped = df_filtered.groupby("playerShort").agg({
     })
 
 
-# In[43]:
+# In[39]:
 
 # We used this to check wether min and max rating change for each player (which was not the case)
 #df_grouped[df_grouped["rater1", "amin"] != df_grouped["rater1", "amax"]]
 
 
-# In[44]:
+# In[40]:
 
 # We used this to test if some players had multiple clubs, league country or position. Which was not the case.
 #print(df_grouped["club"].apply(lambda x: x[0].shape).unique())
@@ -394,12 +394,12 @@ df_grouped = df_filtered.groupby("playerShort").agg({
 #print(df_grouped["position"].apply(lambda x: x[0].shape).unique())
 
 
-# In[45]:
+# In[41]:
 
 df_grouped.head()
 
 
-# In[46]:
+# In[42]:
 
 len(df_grouped)
 
@@ -413,7 +413,7 @@ len(df_grouped)
 
 # First we need to make rows which contain strings in integers (club, position, leagueCountry)
 
-# In[47]:
+# In[43]:
 
 from sklearn import preprocessing
 
@@ -433,19 +433,19 @@ encodeLabels("leagueCountry", df_grouped)
 
 # Now we can create the futur x and y for training
 
-# In[48]:
+# In[44]:
 
 y_possible = df_grouped[["rater1","rater2"]]
 y_possible.head()
 
 
-# In[49]:
+# In[45]:
 
 x = df_grouped.drop(y_possible, axis=1)
 x.head()
 
 
-# In[50]:
+# In[46]:
 
 def prepFeature(feature) :
     nans = True in x[feature].isnull().unique()
@@ -459,122 +459,122 @@ def prepFeature(feature) :
     ax.hist(x[feature].values)
 
 
-# In[51]:
+# In[47]:
 
 prepFeature("redCards")
 
 
-# In[52]:
+# In[48]:
 
 prepFeature("games")
 
 
-# In[53]:
+# In[49]:
 
 prepFeature("defeats")
 
 
-# In[54]:
+# In[50]:
 
 prepFeature("height")
 
 
-# In[55]:
+# In[51]:
 
 prepFeature("meanExp")
 
 
-# In[56]:
+# In[52]:
 
 prepFeature("goals")
 
 
-# In[57]:
+# In[53]:
 
 prepFeature("yellowCards")
 
 
-# In[58]:
+# In[54]:
 
 prepFeature("yellowReds")
 
 
-# In[59]:
+# In[55]:
 
 prepFeature("club")
 
 
-# In[60]:
+# In[56]:
 
 prepFeature("weight")
 
 
-# In[61]:
+# In[57]:
 
 prepFeature("seIAT")
 
 
-# In[62]:
+# In[58]:
 
 prepFeature("ties")
 
 
-# In[63]:
+# In[59]:
 
 prepFeature("leagueCountry")
 
 
-# In[64]:
+# In[60]:
 
 prepFeature("meanIAT")
 
 
-# In[65]:
+# In[61]:
 
 prepFeature("victories")
 
 
-# In[66]:
+# In[62]:
 
 prepFeature("seExp")
 
 
-# In[67]:
+# In[63]:
 
 prepFeature("position")
 
 
 # ## Naive machine learning
 
-# In[70]:
+# In[64]:
 
 from sklearn.ensemble import RandomForestClassifier as RFC
 from sklearn import metrics
 
 
-# In[71]:
+# In[65]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
 
 
 # Let's build y (in a naive fashion for now)
 
-# In[80]:
+# In[66]:
 
 y = (y_possible['rater1'] + y_possible['rater2'] / 2 < 0.5).values
 
 
-# In[74]:
+# In[67]:
 
 rfc.fit(x, y)
 
 
-# In[75]:
+# In[68]:
 
 y_pred = rfc.predict(x)
 
 
-# In[76]:
+# In[69]:
 
 print(metrics.mean_absolute_error(y, y_pred))
 print(metrics.accuracy_score(y, y_pred))
@@ -582,13 +582,13 @@ print(metrics.accuracy_score(y, y_pred))
 
 # ### Ok so we're done here ! 99% seems reasonable, goodbye !
 
-#  
+#  ...
 
-#  
+#  ...
 
-#  
+#  ...
 
-#  
+#  ...
 
 # ## Ok just kidding let's get serious with this !
 
@@ -596,51 +596,49 @@ print(metrics.accuracy_score(y, y_pred))
 
 # let's first split the dataset into a training and testing set. This seems to be generally a good practice in machine learning :).
 
-# In[149]:
+# In[74]:
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=4)
 
 
-# In[150]:
+# In[75]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
 
 
-# In[151]:
+# In[76]:
 
 rfc.fit(x_train, y_train)
 
 
-# In[152]:
+# In[77]:
 
 y_pred = rfc.predict(x_test)
 
 
-# In[153]:
+# In[78]:
 
 print(metrics.mean_absolute_error(y_test, y_pred))
 print(metrics.accuracy_score(y_test, y_pred))
 
 
-# Ok that's kind of disapointing... (but not so much suprising)
+# Ok that's kind of disapointing... (but not so much suprising). A better way to show the error is cross validation.
 
-# Let's try to use some well known ML technics to understand what's going wrong.
-
-# In[162]:
+# In[79]:
 
 #rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
 
 
-# In[163]:
+# In[101]:
 
 # Cross validation 10-Fold (for now) with accuracy scoring
 from sklearn.cross_validation import cross_val_score
-scores = cross_val_score(rfc, x, y, cv=5, scoring='accuracy')
+scores = cross_val_score(rfc, x, y, cv=10, scoring='accuracy')
 
 
-# In[164]:
+# In[102]:
 
 def show_score(scores):
     print(scores)
@@ -652,11 +650,11 @@ def show_score(scores):
 show_score(scores)
 
 
-# We can see again that the result is not pretty, the best result we have is ~73% which is not much better than perdicting that all players are light skinned
+# We can see again that the result is not pretty, the mean result we have is ~70% which is better than perdicting that all players are light skinned
 
 # proportions of classes for the mean rating (considering 1 -> $mean \leq 0.5$)
 
-# In[165]:
+# In[83]:
 
 # Proportion of light and dark skinned players
 prop_1 = np.sum(y) / len(y)
@@ -665,9 +663,11 @@ print("proportion of ones :", prop_1)
 print("proportion of zeroes :", prop_0)
 
 
-# Ok now let's see what the confusion matrix has to say.
+# Let's try to use some well known ML methods to understand what's going wrong.
 
-# In[166]:
+# Let's look at what the confusion matrix has to say.
+
+# In[85]:
 
 confusion_mx = metrics.confusion_matrix(y_test, y_pred)
 TP = confusion_mx[1, 1]
@@ -676,21 +676,21 @@ FP = confusion_mx[0, 1]
 FN = confusion_mx[1, 0]
 
 
-# In[167]:
+# In[86]:
 
 confusion_mx
 
 
 # |total : 317| pred : 0 |  pred : 1  |
 # |---|----|-----|
-# | actual : 0 | TN = 37 | FP = 53 |
-# | actual : 1 | FN = 26 | TP = 201 |
+# | actual : 0 | TN = ~30 | FP = ~55 |
+# | actual : 1 | FN = ~26 | TP = ~200 |
 
 # We can see here that we are good at predicting ones, but our predictions of 0 are all over the place.
 
 # There is an easy way to show this : the **Specificity** (or how correct is the classifier with 0 values)
 
-# In[176]:
+# In[87]:
 
 specificity = TN / float(TN + FP)
 print("Specificity :", specificity)
@@ -698,7 +698,7 @@ print("Specificity :", specificity)
 
 # We can compare it to **Sensitivity** (or true positive rate)
 
-# In[169]:
+# In[88]:
 
 sensitivity = TP / float(TP + FN)
 print("sensitivity :", sensitivity)
@@ -706,13 +706,15 @@ print("sensitivity :", sensitivity)
 
 # Which is much better. 
 # 
-# PS : all these methods are taken from the course and the calculations were found in this notebook : http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb
+# PS : all these methods are taken from the course and the code was copied from this notebook :
+# 
+# http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb
 
 # So, how are we going to do a better job ?
 
 # The first thing we realize is that there is a way to indicate to the random forest classifier the fact that there is a disparity within the data.
 
-# In[193]:
+# In[89]:
 
 class_weights = {
     1 : prop_1*10,
@@ -720,20 +722,20 @@ class_weights = {
 }
 
 
-# In[190]:
+# In[90]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=class_weights)
 
 
 # We will use a function that prints out most of the information we used above to test our new rfc 
 
-# In[200]:
+# In[91]:
 
 from helpers import test_rfc
 test_rfc(rfc, x, y)
 
 
-# Ok, to bad it's not better than before althought our sensitivity is a bit lower (which is reasonable)
+# Ok, to bad it's not better than before in terms of accuracy, eventhough we have a better score with specificity.
 
 # Let's try something else : changing the classification threshold
 
@@ -741,44 +743,82 @@ test_rfc(rfc, x, y)
 
 # let's retrain our data with our new rfc (with weights)
 
-# # NE RUN PAS ce qu'il y a en dessous de ça
-
-# In[201]:
+# In[92]:
 
 rfc.fit(x_train, y_train)
 y_pred = rfc.predict(x_test)
 
 
-# In[206]:
+# getting the probability of ones of the classifier
+
+# In[95]:
 
 y_pred_prob = rfc.predict_proba(x_test)[:, 1]
 
 
-# In[207]:
+# Separating the probability of true and false values
 
-y_pred * y_pred_prob
+# In[96]:
 
+y_pred_prob1 = [x[1] for x in zip(y_test, y_pred_prob) if x[0]]
+y_pred_prob0 = [x[1] for x in zip(y_test, y_pred_prob) if not x[0]]
+
+
+# The following graph was inspired by this video :
+# 
+# https://www.youtube.com/watch?v=OAl6eAyP-yo
+# 
+# It shows in blue the probability given to the true 0 values and in red the probability of true 1 values.
+
+# In[97]:
+
+# histogram of predicted probabilities
+plt.hist(y_pred_prob1, bins=10, alpha=0.6, color="red")
+plt.hist(y_pred_prob0, bins=10, alpha=0.6, color="blue")
+plt.xlim(0, 1)
+plt.title('Histogram of predicted probabilities')
+plt.xlabel('Predicted probabilities')
+plt.ylabel('Frequency')
+
+
+# With this graph we realized that it's going to be very difficult to have a good and fair (in terms of specificity and sensitivity) 
+
+# To verify this fact we are going to use the ROC curve and the AUC (Area Under the Curve) metric
+
+# In[98]:
+
+# Code copied entirely from 
+# http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb
+# There wasn't really another way to show that though :)
+fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred_prob)
+plt.plot(fpr, tpr)
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.0])
+plt.title('ROC curve for our classifier')
+plt.xlabel('False Positive Rate (1 - Specificity)')
+plt.ylabel('True Positive Rate (Sensitivity)')
+plt.grid(True)
+
+
+# In[105]:
+
+# calculate cross-validated AUC score
+AUC_mean = cross_val_score(rfc, x, y, cv=10, scoring='roc_auc').mean()
+print("AUC score :", AUC_mean)
+
+
+# Ok, so what does this all mean.
+
+# First the ROC curve shows us what are the best compromises we can make between Specificity and Sensitivity (be aware that here specificity is inversed), with that you could chose precisely what you want the classifier to be compromising.
+
+# For the AUC score it shows a score of our model compared to a random sampling of 1's and 0's. (PS. the random sample is weighted of course)
 
 # In[ ]:
 
-y_pred_prob_1 = 
+Ok now we have all the tools to try and accuratly validate a method
 
 
-# In[202]:
-
-
-
-
-# In[205]:
-
-# histogram of predicted probabilities
-plt.hist(y_pred_prob_1, bins=8, alpha=0.7)
-plt.hist(y_pred_prob_0, bins=8, alpha=0.7, color="red")
-plt.xlim(0, 1)
-plt.title('Histogram of predicted probabilities')
-plt.xlabel('Predicted probability of diabetes')
-plt.ylabel('Frequency')
-
+# ## Modifying the model
 
 # ### Some tips and tricks from the lab session.
 
