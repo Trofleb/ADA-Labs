@@ -11783,6 +11783,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 </pre></div>
@@ -12737,19 +12738,6 @@ loss of refs with our method :  0.3171274229424849
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">axes</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;refNum&quot;</span><span class="p">,</span> <span class="s2">&quot;games&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;refNum&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">games</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="n">referee_b</span><span class="o">-</span><span class="mi">11</span><span class="p">)</span>
 <span class="n">axes</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;symlog&#39;</span><span class="p">)</span> <span class="c1"># symetric log scale </span>
@@ -12769,11 +12757,11 @@ loss of refs with our method :  0.3171274229424849
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.text.Text at 0x113a0bda0&gt;</pre>
+<pre>&lt;matplotlib.text.Text at 0x1118c5b38&gt;</pre>
 </div>
 
 </div>
@@ -13209,7 +13197,7 @@ AAAsjuIeAAAAAACLo7gHAAAAAMDiKO4BAAAAALA4insAAAAAACyO4h4AAAAAAIujuAcAAAAAwOIo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -13231,11 +13219,11 @@ AAAsjuIeAAAAAACLo7gHAAAAAMDiKO4BAAAAALA4insAAAAAACyO4h4AAAAAAIujuAcAAAAAwOIo
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.text.Text at 0x11731feb8&gt;</pre>
+<pre>&lt;matplotlib.text.Text at 0x11c0a3da0&gt;</pre>
 </div>
 
 </div>
@@ -13665,7 +13653,7 @@ AGBznJYPAAAAAIDNUdwDAAAAAGBzFPcAAAAAANgcxT0AAAAAADZHcQ8AAAAAgM1R3AMAAAAAYHMU
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -13687,11 +13675,11 @@ AGBznJYPAAAAAIDNUdwDAAAAAGBzFPcAAAAAANgcxT0AAAAAADZHcQ8AAAAAgM1R3AMAAAAAYHMU
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.text.Text at 0x11f00df28&gt;</pre>
+<pre>&lt;matplotlib.text.Text at 0x11dc9d0b8&gt;</pre>
 </div>
 
 </div>
@@ -14129,7 +14117,7 @@ AABsjuIeAAAAAACb+3/qqqdt21WWhgAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -14152,7 +14140,7 @@ AABsjuIeAAAAAACb+3/qqqdt21WWhgAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -14730,7 +14718,7 @@ RERERERUh/0/MNSREqj7Vr0AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -14753,7 +14741,7 @@ RERERERUh/0/MNSREqj7Vr0AAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -15328,7 +15316,7 @@ TWMhg/wI+gAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Histogram of country frequency. </span>
@@ -15352,7 +15340,7 @@ TWMhg/wI+gAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[41]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -15958,7 +15946,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_with_pic</span> <span class="o">=</span> <span class="n">df_sup21_once_player</span><span class="p">[</span><span class="n">df_sup21_once_player</span><span class="p">[</span><span class="s2">&quot;photoID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
@@ -15971,7 +15959,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_sup21_once_player</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -15985,7 +15973,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -16000,7 +15988,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_with_pic</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -16014,7 +16002,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -16039,7 +16027,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfc</span> <span class="o">=</span> <span class="n">df_with_pic</span>
@@ -16061,7 +16049,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfc</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -16083,7 +16071,7 @@ rkJggg==
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -16321,7 +16309,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">dfc</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;playerShort&quot;</span><span class="p">)</span>
@@ -16334,7 +16322,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">lucas</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s2">&quot;lucas-wilchez&quot;</span><span class="p">)</span>
@@ -16347,7 +16335,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Taken form http://nbviewer.jupyter.org/github/mathewzilla/redcard/blob/master/Crowdstorming_visualisation.ipynb </span>
@@ -16362,7 +16350,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[35]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -16479,7 +16467,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Taken form http://nbviewer.jupyter.org/github/mathewzilla/redcard/blob/master/Crowdstorming_visualisation.ipynb </span>
@@ -16494,7 +16482,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[37]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -16641,7 +16629,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We only keep what we think are relevant columns.</span>
@@ -16657,7 +16645,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_grouped</span> <span class="o">=</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;playerShort&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
@@ -16674,8 +16662,8 @@ rkJggg==
         <span class="s2">&quot;yellowCards&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
         <span class="s2">&quot;yellowReds&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
         <span class="s2">&quot;redCards&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span>
-        <span class="s2">&quot;rater1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="c1"># never changes so we can take either min, max or mean</span>
-        <span class="s2">&quot;rater2&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="c1"># same here</span>
+        <span class="s2">&quot;rater1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="c1"># never changes so we can take either min, max or mean </span>
+        <span class="s2">&quot;rater2&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="c1"># same here (we used this to test that nothing changed : [np.min, np.max, np,mean])</span>
         <span class="s2">&quot;meanIAT&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="c1"># Here doing the mean seems a bit confusing but it will give an </span>
         <span class="s2">&quot;seIAT&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span>   <span class="c1"># indicatiion whether the player could have been mistreated in </span>
                             <span class="c1"># some of his matches or never.</span>
@@ -16691,7 +16679,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We used this to check wether min and max rating change for each player (which was not the case)</span>
@@ -16705,7 +16693,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We used this to test if some players had multiple clubs, league country or position. Which was not the case.</span>
@@ -16721,7 +16709,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_grouped</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -16735,7 +16723,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[112]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[45]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -16743,25 +16731,25 @@ rkJggg==
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>redCards</th>
-      <th>games</th>
-      <th>defeats</th>
-      <th>height</th>
-      <th>meanExp</th>
-      <th>goals</th>
-      <th>yellowCards</th>
-      <th>yellowReds</th>
-      <th>club</th>
-      <th>weight</th>
-      <th>rater1</th>
-      <th>seIAT</th>
-      <th>ties</th>
-      <th>leagueCountry</th>
       <th>meanIAT</th>
-      <th>rater2</th>
-      <th>victories</th>
-      <th>seExp</th>
       <th>position</th>
+      <th>games</th>
+      <th>meanExp</th>
+      <th>seIAT</th>
+      <th>rater1</th>
+      <th>goals</th>
+      <th>yellowReds</th>
+      <th>ties</th>
+      <th>defeats</th>
+      <th>redCards</th>
+      <th>leagueCountry</th>
+      <th>weight</th>
+      <th>rater2</th>
+      <th>height</th>
+      <th>yellowCards</th>
+      <th>seExp</th>
+      <th>club</th>
+      <th>victories</th>
     </tr>
     <tr>
       <th>playerShort</th>
@@ -16789,113 +16777,113 @@ rkJggg==
   <tbody>
     <tr>
       <th>aaron-hughes</th>
-      <td>0</td>
-      <td>641</td>
-      <td>222</td>
-      <td>182.0</td>
-      <td>0.487879</td>
-      <td>9</td>
-      <td>19</td>
-      <td>0</td>
-      <td>Fulham FC</td>
-      <td>71.0</td>
-      <td>0.25</td>
-      <td>0.000333</td>
-      <td>176</td>
-      <td>England</td>
       <td>0.344759</td>
-      <td>0.00</td>
-      <td>243</td>
-      <td>0.001553</td>
       <td>Center Back</td>
+      <td>641</td>
+      <td>0.487879</td>
+      <td>0.000333</td>
+      <td>0.25</td>
+      <td>9</td>
+      <td>0</td>
+      <td>176</td>
+      <td>222</td>
+      <td>0</td>
+      <td>England</td>
+      <td>71.0</td>
+      <td>0.00</td>
+      <td>182.0</td>
+      <td>19</td>
+      <td>0.001553</td>
+      <td>Fulham FC</td>
+      <td>243</td>
     </tr>
     <tr>
       <th>aaron-hunt</th>
-      <td>1</td>
-      <td>329</td>
-      <td>119</td>
-      <td>183.0</td>
-      <td>0.453989</td>
-      <td>59</td>
-      <td>39</td>
-      <td>0</td>
-      <td>Werder Bremen</td>
-      <td>73.0</td>
-      <td>0.00</td>
-      <td>0.000226</td>
-      <td>70</td>
-      <td>Germany</td>
       <td>0.349332</td>
-      <td>0.25</td>
-      <td>140</td>
-      <td>0.001025</td>
       <td>Attacking Midfielder</td>
+      <td>329</td>
+      <td>0.453989</td>
+      <td>0.000226</td>
+      <td>0.00</td>
+      <td>59</td>
+      <td>0</td>
+      <td>70</td>
+      <td>119</td>
+      <td>1</td>
+      <td>Germany</td>
+      <td>73.0</td>
+      <td>0.25</td>
+      <td>183.0</td>
+      <td>39</td>
+      <td>0.001025</td>
+      <td>Werder Bremen</td>
+      <td>140</td>
     </tr>
     <tr>
       <th>aaron-lennon</th>
-      <td>0</td>
+      <td>0.345893</td>
+      <td>Right Midfielder</td>
       <td>412</td>
-      <td>115</td>
-      <td>165.0</td>
       <td>0.491482</td>
+      <td>0.000367</td>
+      <td>0.25</td>
       <td>31</td>
-      <td>11</td>
       <td>0</td>
-      <td>Tottenham Hotspur</td>
+      <td>97</td>
+      <td>115</td>
+      <td>0</td>
+      <td>England</td>
       <td>63.0</td>
       <td>0.25</td>
-      <td>0.000367</td>
-      <td>97</td>
-      <td>England</td>
-      <td>0.345893</td>
-      <td>0.25</td>
-      <td>200</td>
+      <td>165.0</td>
+      <td>11</td>
       <td>0.002032</td>
-      <td>Right Midfielder</td>
+      <td>Tottenham Hotspur</td>
+      <td>200</td>
     </tr>
     <tr>
       <th>aaron-ramsey</th>
-      <td>1</td>
+      <td>0.346790</td>
+      <td>Center Midfielder</td>
       <td>254</td>
-      <td>67</td>
-      <td>178.0</td>
       <td>0.511650</td>
+      <td>0.000525</td>
+      <td>0.00</td>
       <td>39</td>
-      <td>31</td>
       <td>0</td>
-      <td>Arsenal FC</td>
+      <td>42</td>
+      <td>67</td>
+      <td>1</td>
+      <td>England</td>
       <td>76.0</td>
       <td>0.00</td>
-      <td>0.000525</td>
-      <td>42</td>
-      <td>England</td>
-      <td>0.346790</td>
-      <td>0.00</td>
-      <td>145</td>
+      <td>178.0</td>
+      <td>31</td>
       <td>0.002938</td>
-      <td>Center Midfielder</td>
+      <td>Arsenal FC</td>
+      <td>145</td>
     </tr>
     <tr>
       <th>abdelhamid-el-kaoutari</th>
-      <td>2</td>
+      <td>0.331600</td>
+      <td>Center Back</td>
       <td>124</td>
-      <td>43</td>
-      <td>180.0</td>
       <td>0.335587</td>
+      <td>0.001488</td>
+      <td>0.25</td>
       <td>1</td>
-      <td>8</td>
       <td>4</td>
-      <td>Montpellier HSC</td>
+      <td>40</td>
+      <td>43</td>
+      <td>2</td>
+      <td>France</td>
       <td>73.0</td>
       <td>0.25</td>
-      <td>0.001488</td>
-      <td>40</td>
-      <td>France</td>
-      <td>0.331600</td>
-      <td>0.25</td>
-      <td>41</td>
+      <td>180.0</td>
+      <td>8</td>
       <td>0.005296</td>
-      <td>Center Back</td>
+      <td>Montpellier HSC</td>
+      <td>41</td>
     </tr>
   </tbody>
 </table>
@@ -16910,7 +16898,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df_grouped</span><span class="p">)</span>
@@ -16924,7 +16912,7 @@ rkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[113]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -16979,7 +16967,7 @@ With this value we can validate the fact that we lost minimal data and have most
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[114]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">preprocessing</span>
@@ -17015,7 +17003,7 @@ With this value we can validate the fact that we lost minimal data and have most
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_possible</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="p">[[</span><span class="s2">&quot;rater1&quot;</span><span class="p">,</span><span class="s2">&quot;rater2&quot;</span><span class="p">]]</span>
@@ -17030,7 +17018,7 @@ With this value we can validate the fact that we lost minimal data and have most
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[115]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[48]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -17086,7 +17074,7 @@ With this value we can validate the fact that we lost minimal data and have most
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[133]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">y_possible</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -17101,7 +17089,7 @@ With this value we can validate the fact that we lost minimal data and have most
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[133]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[49]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -17109,23 +17097,23 @@ With this value we can validate the fact that we lost minimal data and have most
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>redCards</th>
-      <th>games</th>
-      <th>defeats</th>
-      <th>height</th>
-      <th>meanExp</th>
-      <th>goals</th>
-      <th>yellowCards</th>
-      <th>yellowReds</th>
-      <th>club</th>
-      <th>weight</th>
-      <th>seIAT</th>
-      <th>ties</th>
-      <th>leagueCountry</th>
       <th>meanIAT</th>
-      <th>victories</th>
-      <th>seExp</th>
       <th>position</th>
+      <th>games</th>
+      <th>meanExp</th>
+      <th>seIAT</th>
+      <th>goals</th>
+      <th>yellowReds</th>
+      <th>ties</th>
+      <th>defeats</th>
+      <th>redCards</th>
+      <th>leagueCountry</th>
+      <th>weight</th>
+      <th>height</th>
+      <th>yellowCards</th>
+      <th>seExp</th>
+      <th>club</th>
+      <th>victories</th>
     </tr>
     <tr>
       <th>playerShort</th>
@@ -17151,103 +17139,103 @@ With this value we can validate the fact that we lost minimal data and have most
   <tbody>
     <tr>
       <th>aaron-hughes</th>
-      <td>0</td>
-      <td>641</td>
-      <td>222</td>
-      <td>182.0</td>
-      <td>0.487879</td>
-      <td>9</td>
-      <td>19</td>
-      <td>0</td>
-      <td>34</td>
-      <td>71.0</td>
-      <td>0.000333</td>
-      <td>176</td>
-      <td>0</td>
       <td>0.344759</td>
-      <td>243</td>
-      <td>0.001553</td>
       <td>1</td>
+      <td>641</td>
+      <td>0.487879</td>
+      <td>0.000333</td>
+      <td>9</td>
+      <td>0</td>
+      <td>176</td>
+      <td>222</td>
+      <td>0</td>
+      <td>0</td>
+      <td>71.0</td>
+      <td>182.0</td>
+      <td>19</td>
+      <td>0.001553</td>
+      <td>34</td>
+      <td>243</td>
     </tr>
     <tr>
       <th>aaron-hunt</th>
-      <td>1</td>
-      <td>329</td>
-      <td>119</td>
-      <td>183.0</td>
-      <td>0.453989</td>
-      <td>59</td>
-      <td>39</td>
-      <td>0</td>
-      <td>90</td>
-      <td>73.0</td>
-      <td>0.000226</td>
-      <td>70</td>
-      <td>2</td>
       <td>0.349332</td>
-      <td>140</td>
-      <td>0.001025</td>
       <td>0</td>
+      <td>329</td>
+      <td>0.453989</td>
+      <td>0.000226</td>
+      <td>59</td>
+      <td>0</td>
+      <td>70</td>
+      <td>119</td>
+      <td>1</td>
+      <td>2</td>
+      <td>73.0</td>
+      <td>183.0</td>
+      <td>39</td>
+      <td>0.001025</td>
+      <td>90</td>
+      <td>140</td>
     </tr>
     <tr>
       <th>aaron-lennon</th>
-      <td>0</td>
-      <td>412</td>
-      <td>115</td>
-      <td>165.0</td>
-      <td>0.491482</td>
-      <td>31</td>
-      <td>11</td>
-      <td>0</td>
-      <td>82</td>
-      <td>63.0</td>
-      <td>0.000367</td>
-      <td>97</td>
-      <td>0</td>
       <td>0.345893</td>
-      <td>200</td>
-      <td>0.002032</td>
       <td>10</td>
+      <td>412</td>
+      <td>0.491482</td>
+      <td>0.000367</td>
+      <td>31</td>
+      <td>0</td>
+      <td>97</td>
+      <td>115</td>
+      <td>0</td>
+      <td>0</td>
+      <td>63.0</td>
+      <td>165.0</td>
+      <td>11</td>
+      <td>0.002032</td>
+      <td>82</td>
+      <td>200</td>
     </tr>
     <tr>
       <th>aaron-ramsey</th>
-      <td>1</td>
-      <td>254</td>
-      <td>67</td>
-      <td>178.0</td>
-      <td>0.511650</td>
-      <td>39</td>
-      <td>31</td>
-      <td>0</td>
-      <td>6</td>
-      <td>76.0</td>
-      <td>0.000525</td>
-      <td>42</td>
-      <td>0</td>
       <td>0.346790</td>
-      <td>145</td>
-      <td>0.002938</td>
       <td>3</td>
+      <td>254</td>
+      <td>0.511650</td>
+      <td>0.000525</td>
+      <td>39</td>
+      <td>0</td>
+      <td>42</td>
+      <td>67</td>
+      <td>1</td>
+      <td>0</td>
+      <td>76.0</td>
+      <td>178.0</td>
+      <td>31</td>
+      <td>0.002938</td>
+      <td>6</td>
+      <td>145</td>
     </tr>
     <tr>
       <th>abdelhamid-el-kaoutari</th>
-      <td>2</td>
-      <td>124</td>
-      <td>43</td>
-      <td>180.0</td>
-      <td>0.335587</td>
-      <td>1</td>
-      <td>8</td>
-      <td>4</td>
-      <td>51</td>
-      <td>73.0</td>
-      <td>0.001488</td>
-      <td>40</td>
-      <td>1</td>
       <td>0.331600</td>
-      <td>41</td>
-      <td>0.005296</td>
       <td>1</td>
+      <td>124</td>
+      <td>0.335587</td>
+      <td>0.001488</td>
+      <td>1</td>
+      <td>4</td>
+      <td>40</td>
+      <td>43</td>
+      <td>2</td>
+      <td>1</td>
+      <td>73.0</td>
+      <td>180.0</td>
+      <td>8</td>
+      <td>0.005296</td>
+      <td>51</td>
+      <td>41</td>
     </tr>
   </tbody>
 </table>
@@ -17262,7 +17250,7 @@ With this value we can validate the fact that we lost minimal data and have most
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[174]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prepFeature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="p">:</span>
@@ -17284,7 +17272,7 @@ With this value we can validate the fact that we lost minimal data and have most
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[175]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;redCards&quot;</span><span class="p">)</span>
@@ -17595,7 +17583,7 @@ FgCAoghYAACK8gUPh9uaH8nacgAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[176]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;games&quot;</span><span class="p">)</span>
@@ -17945,7 +17933,7 @@ zMh+g2T03C0AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[177]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;defeats&quot;</span><span class="p">)</span>
@@ -18259,7 +18247,7 @@ AOA1AisAAAC89gIo+iBBbffhgwAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[178]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
@@ -18272,6 +18260,13 @@ AOA1AisAAAC89gIo+iBBbffhgwAAAABJRU5ErkJggg==
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mean replacement of nans
+</pre>
+</div>
+</div>
 
 <div class="output_area"><div class="prompt"></div>
 
@@ -18595,7 +18590,7 @@ RIbGgZWIiIiIDI0DKxEREREZGgdWIiIiIjI0DqxEREREZGi/AXi/soNqWOr1AAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[179]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;meanExp&quot;</span><span class="p">)</span>
@@ -18882,7 +18877,7 @@ uD4AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[180]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;goals&quot;</span><span class="p">)</span>
@@ -19206,7 +19201,7 @@ iYiIiMjQONASERERkaH9A4ElF83zRUvtAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[181]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;yellowCards&quot;</span><span class="p">)</span>
@@ -19516,7 +19511,7 @@ N8EKAEDRBCsAAEUTrAAAFE2wAgBQNMEKAEDRBCsAAEUTrAAAFE2wAgBQNMEKAEDRBCsAAEW7AxoP
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[182]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">)</span>
@@ -19835,7 +19830,7 @@ lV8yqTjU/jtmaQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[183]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;club&quot;</span><span class="p">)</span>
@@ -20076,7 +20071,7 @@ AADAaP8LZhfldv52xWMAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[184]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
@@ -20089,6 +20084,13 @@ AADAaP8LZhfldv52xWMAAAAASUVORK5CYII=
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>mean replacement of nans
+</pre>
+</div>
+</div>
 
 <div class="output_area"><div class="prompt"></div>
 
@@ -20388,7 +20390,7 @@ KwAARfsCxmbtTD7+x3UAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[185]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;seIAT&quot;</span><span class="p">)</span>
@@ -20713,7 +20715,7 @@ rkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[186]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;ties&quot;</span><span class="p">)</span>
@@ -21013,7 +21015,7 @@ AgAAwGgEVgAAABjt/wCLQPYRUzGwqQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;leagueCountry&quot;</span><span class="p">)</span>
@@ -21292,7 +21294,7 @@ AGAkgioAAACMRFAFAACAkf4fjJBuD4l6h/gAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[188]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;meanIAT&quot;</span><span class="p">)</span>
@@ -21590,7 +21592,7 @@ KwAAAKxAcAUAAIAVCK4AAACwAsEVAAAAViC4AgAAwAr/D3D+AyzfsAJdAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[189]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;victories&quot;</span><span class="p">)</span>
@@ -21882,7 +21884,7 @@ AABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[190]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;seExp&quot;</span><span class="p">)</span>
@@ -22200,7 +22202,7 @@ EGwBAAAQCARbAAAABALBFgAAAIFAsAUAAEAgEGwBAAAQCARbAAAABALBFgAAAIFAsAUAAEAgfABi
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[191]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">prepFeature</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
@@ -22514,13 +22516,13 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Naif-machine-learning">Naif machine learning<a class="anchor-link" href="#Naif-machine-learning">&#182;</a></h2>
+<h2 id="Naive-machine-learning">Naive machine learning<a class="anchor-link" href="#Naive-machine-learning">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[205]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span> <span class="k">as</span> <span class="n">RFC</span>
@@ -22534,7 +22536,7 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[206]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span> <span class="o">=</span> <span class="n">RFC</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -22550,17 +22552,17 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's build y (in a naif fashion)</p>
+<p>Let's build y (in a naive fashion for now)</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[207]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 
 </div>
@@ -22570,39 +22572,10 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[208]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[208]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.70833333333333337</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[209]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -22613,7 +22586,7 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[209]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[74]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -22633,7 +22606,7 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[218]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -22646,7 +22619,7 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[219]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -22663,8 +22636,8 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0.00883838383838
-0.991161616162
+<pre>0.0183080808081
+0.981691919192
 </pre>
 </div>
 </div>
@@ -22675,6 +22648,1200 @@ AIoiUAEAKMoHdhzhYA11micAAAAASUVORK5CYII=
   output_errors = np.average(np.abs(y_pred - y_true),
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Ok-so-we're-done-here-!-99%-seems-reasonable,-goodbye-!">Ok so we're done here ! 99% seems reasonable, goodbye !<a class="anchor-link" href="#Ok-so-we're-done-here-!-99%-seems-reasonable,-goodbye-!">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Ok-just-kidding-let's-get-serious-with-this-!">Ok just kidding let's get serious with this !<a class="anchor-link" href="#Ok-just-kidding-let's-get-serious-with-this-!">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First let's really test the naive approach and see how it could perform in a "real" situation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>let's first split the dataset into a training and testing set. This seems to be generally a good practice in machine learning :).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[149]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="k">import</span> <span class="n">train_test_split</span>
+
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span> <span class="o">=</span> <span class="n">RFC</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[151]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>RandomForestClassifier(bootstrap=True, class_weight=None, criterion=&#39;gini&#39;,
+            max_depth=None, max_features=&#39;auto&#39;, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10, n_jobs=-1, oob_score=False, random_state=None,
+            verbose=0, warm_start=False)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[152]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[153]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.249211356467
+0.750788643533
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.5/site-packages/sklearn/metrics/regression.py:164: DeprecationWarning: numpy boolean subtract, the `-` operator, is deprecated, use the bitwise_xor, the `^` operator, or the logical_xor function instead.
+  output_errors = np.average(np.abs(y_pred - y_true),
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok that's kind of disapointing... (but not so much suprising)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try to use some well known ML technics to understand what's going wrong.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[163]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Cross validation 10-Fold (for now) with accuracy scoring</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="k">import</span> <span class="n">cross_val_score</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">show_score</span><span class="p">(</span><span class="n">scores</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean :&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min :&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;max :&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+
+<span class="n">show_score</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[ 0.70440252  0.66981132  0.71518987  0.6835443   0.73101266]
+--------------------------
+mean : 0.700792134384
+min : 0.669811320755
+max : 0.731012658228
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see again that the result is not pretty, the best result we have is ~73% which is not much better than perdicting that all players are light skinned</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>proportions of classes for the mean rating (considering 1 -&gt; $mean \leq 0.5$)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Proportion of light and dark skinned players</span>
+<span class="n">prop_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">prop_0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prop_1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;proportion of ones :&quot;</span><span class="p">,</span> <span class="n">prop_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;proportion of zeroes :&quot;</span><span class="p">,</span> <span class="n">prop_0</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>proportion of ones : 0.708333333333
+proportion of zeroes : 0.291666666667
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok now let's see what the confusion matrix has to say.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[166]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">confusion_mx</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">TP</span> <span class="o">=</span> <span class="n">confusion_mx</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">TN</span> <span class="o">=</span> <span class="n">confusion_mx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">FP</span> <span class="o">=</span> <span class="n">confusion_mx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">FN</span> <span class="o">=</span> <span class="n">confusion_mx</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[167]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">confusion_mx</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[167]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 37,  53],
+       [ 26, 201]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead><tr>
+<th>total : 317</th>
+<th>pred : 0</th>
+<th>pred : 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>actual : 0</td>
+<td>TN = 37</td>
+<td>FP = 53</td>
+</tr>
+<tr>
+<td>actual : 1</td>
+<td>FN = 26</td>
+<td>TP = 201</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see here that we are good at predicting ones, but our predictions of 0 are all over the place.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is an easy way to show this : the <strong>Specificity</strong> (or how correct is the classifier with 0 values)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[176]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">specificity</span> <span class="o">=</span> <span class="n">TN</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">TN</span> <span class="o">+</span> <span class="n">FP</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Specificity :&quot;</span><span class="p">,</span> <span class="n">specificity</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Specificity : 0.411111111111
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can compare it to <strong>Sensitivity</strong> (or true positive rate)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[169]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sensitivity</span> <span class="o">=</span> <span class="n">TP</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">TP</span> <span class="o">+</span> <span class="n">FN</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sensitivity :&quot;</span><span class="p">,</span> <span class="n">sensitivity</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>sensitivity : 0.885462555066
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Which is much better.</p>
+<p>PS : all these methods are taken from the course and the calculations were found in this notebook : <a href="http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb">http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, how are we going to do a better job ?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The first thing we realize is that there is a way to indicate to the random forest classifier the fact that there is a disparity within the data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[193]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">class_weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="n">prop_1</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="n">prop_0</span><span class="o">*</span><span class="mi">10</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[190]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span> <span class="o">=</span> <span class="n">RFC</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We will use a function that prints out most of the information we used above to test our new rfc</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[200]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">test_rfc</span>
+<span class="n">test_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Cross validation scores
+[ 0.7327044   0.6918239   0.72151899  0.69620253  0.73417722]
+--------------------------
+cross mean : 0.715285407213
+cross min : 0.691823899371
+cross max : 0.73417721519
+----------
+TP : 193
+TN : 37
+FP : 53
+FN : 34
+----------
+specificity : 0.411111111111
+sensitivity : 0.850220264317
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, to bad it's not better than before althought our sensitivity is a bit lower (which is reasonable)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try something else : changing the classification threshold</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We think this will help the <strong>specificity</strong> get higher.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>let's retrain our data with our new rfc (with weights)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="NE-RUN-PAS-ce-qu'il-y-a-en-dessous-de-&#231;a">NE RUN PAS ce qu'il y a en dessous de &#231;a<a class="anchor-link" href="#NE-RUN-PAS-ce-qu'il-y-a-en-dessous-de-&#231;a">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[201]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rfc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[206]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred_prob</span> <span class="o">=</span> <span class="n">rfc</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[207]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred</span> <span class="o">*</span> <span class="n">y_pred_prob</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[207]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.7,  0.6,  0. ,  0.8,  0.8,  0.7,  0.9,  0.6,  1. ,  0.7,  0.7,
+        0.8,  1. ,  0.9,  0.7,  0.9,  0.6,  0.9,  1. ,  0. ,  0. ,  0.9,
+        0.8,  0.6,  0.6,  0.7,  0.6,  0.9,  0.9,  1. ,  0.9,  0.7,  0.7,
+        0.8,  0.8,  0.7,  0.8,  0.9,  1. ,  0. ,  0. ,  1. ,  0.7,  0.8,
+        0.9,  0.8,  0.9,  1. ,  1. ,  1. ,  0.7,  0. ,  0. ,  1. ,  0. ,
+        0.9,  0.8,  0.7,  1. ,  0. ,  0. ,  1. ,  1. ,  1. ,  0.7,  0.9,
+        0.6,  0. ,  0.7,  0.7,  0.6,  0.6,  0. ,  0.9,  0.6,  0.7,  0. ,
+        0. ,  0. ,  0.8,  0.8,  0.9,  0.7,  0.8,  0.9,  0. ,  0. ,  0.6,
+        0.8,  0. ,  0. ,  0.7,  0. ,  0.9,  0.9,  0.8,  0. ,  1. ,  1. ,
+        0.7,  0.6,  0.7,  0.7,  0.9,  0.6,  0.8,  0.6,  0.9,  0. ,  0. ,
+        0.6,  0.7,  0.9,  0.8,  1. ,  0.9,  0.9,  0.7,  0.9,  0.6,  0.9,
+        0.6,  1. ,  0.8,  0.8,  0.6,  0.9,  0.9,  0.6,  0.7,  0.7,  0.8,
+        1. ,  0. ,  1. ,  0.8,  0.9,  1. ,  0.9,  0.8,  0.8,  0.8,  0.8,
+        0.8,  0.8,  0. ,  0.8,  0.7,  0.9,  1. ,  0.7,  0.6,  0. ,  0. ,
+        0.9,  0. ,  0. ,  0.8,  0.8,  1. ,  0.8,  0.9,  0. ,  0.8,  0.6,
+        1. ,  0.8,  0. ,  0. ,  0.6,  0.7,  0.9,  0.7,  0.7,  0.6,  1. ,
+        0. ,  0.8,  0.7,  0.6,  0.8,  0.8,  0.7,  1. ,  0.7,  0.9,  0.7,
+        0.9,  0. ,  0.7,  0.7,  0.8,  0.6,  0.6,  1. ,  0.9,  0. ,  0.9,
+        0.6,  0.9,  0. ,  0. ,  1. ,  0.9,  0. ,  1. ,  0.7,  0.9,  0. ,
+        0.7,  0.9,  0. ,  0. ,  0. ,  0.6,  0. ,  0.9,  0.8,  0.7,  0.8,
+        0.9,  0.7,  1. ,  0. ,  0.9,  1. ,  0. ,  0.9,  0.6,  0.9,  0.8,
+        0.9,  0.7,  0.7,  0. ,  0.6,  0. ,  0. ,  0.8,  0. ,  0.8,  0.8,
+        0.8,  0.7,  0.8,  0.9,  0.8,  0.7,  0.6,  0.6,  0. ,  0.9,  0.6,
+        0.9,  0. ,  0. ,  0.9,  0.9,  0.9,  0.7,  0.8,  0.7,  0.9,  0. ,
+        1. ,  1. ,  0. ,  0.8,  0.9,  0.7,  0.9,  0.9,  0. ,  0.8,  0.9,
+        0.7,  0.9,  1. ,  0.6,  1. ,  0.9,  0.6,  0.9,  1. ,  0.9,  0. ,
+        0.7,  0.9,  0.6,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0.6,  0.6,
+        0.9,  0. ,  0.8,  0. ,  1. ,  0.7,  0.9,  0.8,  0.7,  0.7,  0.9,
+        0. ,  0.9,  0. ,  0.7,  0. ,  0.7,  0.9,  1. ,  0.9])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred_prob_1</span> <span class="o">=</span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[202]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[205]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># histogram of predicted probabilities</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y_pred_prob_1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y_pred_prob_0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram of predicted probabilities&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted probability of diabetes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[205]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.text.Text at 0x12567dc18&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAr8AAAH9CAYAAAATYRQUAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAAPYQAAD2EBqD+naQAAIABJREFUeJzs3Xl8VNX9//H3nZls7BAIAoIItGWVBAgICApFKxREmqJV
+BEQxoIBahRLQglIwIBRR2eMXqPBV2V2oRYta/X0RZBcU1LIoiywJkrBkmcxkfn+kTBkSEIZJZjLn
+9Xw8eMDce+fezz1nmHnPnXPvtTwej0cAAACAAWzBLgAAAAAoLYRfAAAAGIPwCwAAAGMQfgEAAGAM
+wi8AAACMQfgFAACAMQi/AAAAMAbhFwAAAMYg/AIAAMAYhF8gjKSkpKhr166XnN+1a1eNGTPmko9/
+zscff6zRo0dfU43h4LvvvtPdd9+tFi1aqGfPnsEux+vIkSNq3Lix3n77bUnSpk2b1LhxY23evPmK
+nu90OjV58mStWbMmIPVc7esr0K52/y+nf//+GjBgwGWXmTlzppo0aeJ9fOH+X9w3Z86cUUpKirZs
+2XJV2wBw7RzBLgBA4FiWJcuyrnj52bNnq3z58le8/MKFC69q/eFq5syZOnr0qGbPnq1q1aoFu5xL
+atasmZYtW6aGDRte0fLp6elatGiRJk+eXMKVlZ7SfL327dtXnTt3LnZejRo1tGzZMtWtW1eStGfP
+Hr399ttKSkryLvPcc8+VRpmA8Qi/gMEaN24c7BLKpMzMTP3yl79Up06dgl3KZZUvX1433XTTFS/v
+8XhKsJrwV7NmTdWsWbPYeZGRkT594fF4igTzK/2SAuDaMOwBMNjFP0uvWbNGvXv3VsuWLdW+fXuN
+GjVKJ06ckFT4k+zmzZu1adMmNWnSxPtTcnp6usaMGaPbbrtNLVu2VN++ffXxxx/7bOfcuXMaN26c
+OnTooISEBD311FNatGiRT/ju37+/Ro0apccff1wJCQl6+OGHJUmHDx/Wn/70J3Xq1EnNmzdXhw4d
+NHr0aGVmZvrsx8yZM5Wamqqbb75ZrVq10siRI5Wdna358+fr1ltvVZs2bfT4448rKyvrsm3yc/tz
+/mf0zZs3q0mTJt6fsS/Wv39/jRkzRvPmzVPHjh3Vpk0bDRs2TD/++KN3mZkzZ+qOO+7QrFmz1K5d
+O3Xq1ElnzpyRJC1fvlw9e/ZUixYt1KVLF82cOVNut9tnGx9++KG3v373u99pz549PvOL+9l/x44d
+euihh9S6dWu1b99eTz/9tI4fP64jR46oW7dusixLKSkp+vWvf+19zpYtW9S/f3/Fx8erXbt2SklJ
+0U8//eSzrW+++UaDBg1SQkKCunbtqvfee++y7SxJq1atUuPGjbVz50797ne/U8uWLXXXXXfpgw8+
+8C5zfrjAokWL1KNHDyUkJGj16tWSpF27dmnw4MFq166dWrduraFDh2rv3r1FtvPvf/9b/fr10003
+3aQ77rhDS5Ys8Zl/6tQpPf/88+ratauaN2+udu3aafjw4Tpy5EiRdc2ePVsdO3ZUQkKChg0bpkOH
+Dnnnvfrqq5f8QnnhsIdNmzZp4MCBknyHOlw87MHj8Wj+/Pm644471KJFC/3mN78pUvuhQ4f06KOP
+ql27doqPj9cf/vAHffrpp5dtd8B0hF8gDLnd7iJ/XC7XZZ+zdetWjR49Wnfeeadee+01jR07Vhs2
+bNDTTz8tqfAn2aZNm6pp06ZaunSpmjZtqpMnTyopKUnbtm3T008/rVdffVXXX3+9hg0b5jNu9LHH
+HtMHH3ygJ554QjNmzFB2dramT59e5MjXP/7xD1WoUEFz5szR4MGDlZubqwEDBujAgQN67rnntGDB
+Ag0cOFB///vfNWPGDJ/nLly4UEePHtVLL72kRx99VGvWrFFSUpI+//xzTZw4UU8//bQ++ugjvfLK
+K5dsgyvZn2XLlqlJkybedrj11lsvub6PPvpIq1at0rhx4zRhwgTt2bNHAwYMUF5enneZH3/8UZ99
+9plmzJihMWPGqGLFipo3b57GjRunjh07at68eXrggQeUlpam8ePHe5/38ccf64knnlCTJk00e/Zs
+de/eXaNGjSrSphc+3r17t/r376/8/HxNnTpVEyZM0FdffaXBgwcrLi5OM2fOlMfj0bBhwzRr1ixJ
+0ubNm/Xggw+qXLlyevnllzV27FhveHM6nZKk48ePq3///jp37pymT5+uJ554QtOmTfN+cbqU87UN
+HTpUt99+u2bNmqUGDRroySef1Geffeaz7MyZM/XII4/oxRdfVIcOHbRx40bdd999sixLqampmjRp
+ko4dO6Y//OEPOnDggPd5Ho9HqampatWqlebOnavOnTtr4sSJWrx4sXeZ5ORkff755xo5cqQWLlyo
+ESNGaMOGDUWGIWzdulXvv/++nnvuOU2aNEnffPONBg4cqOzsbO/+XMkwi2bNmmncuHGSCv9fXdiv
+Fxo/frxeffVV9e7dW/PmzVP37t31wgsvaM6cOd59S05OVm5urqZNm6Y5c+aoSpUqRUI5AF8MewDC
+zJEjR9SsWbNi513ug3nr1q2KiYnR4MGDFRERIUmqUqWKdu3aJanwJ9ny5cvLsizvz7ezZ89WZmam
+li1bpuuuu06S1LlzZ2VmZmrKlCnq2bOnNmzYoC+++EIzZ85Ut27dvMv06tVL+/bt86khIiJCzz//
+vHf733zzjWrXrq0pU6aoTp06kqS2bdtqx44d2rRpk89zK1asqBkzZshms6l9+/ZavXq1Tpw4oRUr
+VnjHNX/66afatm3bJdtgwYIFP7s/N910U5F2uJScnBytXr3aW/uNN96oPn366O2339a9994rqfCL
+SkpKihISEiRJZ8+e1dy5c3Xfffd5j8p36NBBVapU0bPPPqtBgwapYcOGmjVrllq2bOkdn9uxY0dJ
+0vTp031quHAow9y5c1W1alUtWLDA28Y1atTQyJEjtW/fPu/JWnXr1vUewfzrX/+qhg0bat68ed71
+xMfHq0ePHlqxYoXuv/9+LVq0SC6XS2lpaapcubJ3X++5557Lts95AwYM0NChQyVJt9xyi/r06aPZ
+s2f7jJ/t0aOH+vTp4308fPhw3XjjjZo/f773dd2xY0fdfvvteuWVV/TSSy95l7333nu9X+I6dOig
+Y8eOad68eerfv79OnDih8uXLa+zYsd4+SExM1Pfff6/ly5f71OlwOLRgwQLFxcVJkho0aKA+ffpo
+9erV6tev3xXtq1Q4HKVRo0aSCv9fFTfc4cCBA1q+fLlGjhzp/RWkQ4cOsixL8+bN0/3336/8/Hwd
+OHBAw4cP9w7BadGihWbNmuX9YgKgKI78AmEmLi5Oq1at0sqVK4v8qV69+iWf17ZtW2VnZ6tnz56a
+Pn26tmzZoo4dO+qxxx675HM2b96shIQEb1A876677lJGRob27dunL774QhEREd7gKxWG8DvvvLPI
++ho2bOgNZVLhEIMlS5aodu3a+uGHH/Tpp59qwYIF2r9/f5EP95tuukk223/f0mJjY9WgQQOfE/qq
+Vq2q06dPX9P+XI3WrVt7g68kNWnSRHXr1i0S3C/8qXz79u3Kzc1Vly5dfI7c33bbbfJ4PFq/fr3y
+8vK0e/dudenSxWc93bt3v+y43W3btqlz584+bRwfH69169YV+3N9bm6udu7cqVtvvdWnljp16qhB
+gwb6/PPPvett1aqVN/hKhf1Ru3btn20jy7J09913+0y7/fbbtXPnTp8+/tWvfuX9d05Ojr766ivd
+eeedPl/oKlasqC5duvi0r2VZ6t69e5H1nzx5Uvv27VNcXJwWLVqkhIQEHTlyRJ9//rmWLFmibdu2
+FXmNtWrVyht8pcJ+u/76632u2BAoGzdulCTddtttPm3fpUsX5ebmasuWLapevboaNWqkZ599Vikp
+KVqzZo0KCgo0evRoxg8Dl8GRXyDMREREqGnTppecdynx8fFKS0vTwoULtWjRIs2fP1/Vq1fX0KFD
+9cADDxT7nKysLO/Z6xc6H7LPnDmjn376SVWqVLnkMhcqV65ckWkLFy7UvHnzlJWVpdjYWDVv3lwx
+MTHesbHnFXfViujo6OJ39hKuZH+uRnEnP8XGxhYZdxwTE+P9d2Zmpvfn7IuDrGVZSk9PV1ZWljwe
+j6pWreoz/8JgVpzMzEzFxsZecf1ZWVkqKChQWlqa5s+fX6SW8/2VmZmp66+/vsjza9SocUXbubju
+2NhYeTweny8qF/bv6dOn5fF4il1/9erVi3zBuXi5821wfrl3331XL730ko4dO6bKlSuradOmPn1y
+4bovFhsbe9kvVP4638e//e1vi8yzLMs7pGThwoWaM2eOPvzwQ73zzjuy2+26/fbbNWHCBFWsWDHg
+dQHhgPALwKtjx47q2LGj8vLytHHjRr3++uuaNGmS4uPj1bx58yLLV65cWRkZGUWmn/9grlq1qq67
+7jqdOnWqyDLFPe9i7733nqZMmaLRo0erT58+3hD95JNPeodjBNKV7M/VuNR+33DDDZd8TqVKlSQV
+Djcobrnq1aurSpUqstlsRWotbnsXqlixYpET1aTC4SDFDZWpUKGCLMvSgw8+WOz1jM9/uahatapO
+njxZZP6FJyVeTmZmps8l49LT02W321W5cuVixw1XqlTJ+0XgYunp6UX6KTMzU/Xq1fM+Pt9usbGx
+2rJli1JSUjRw4EA99NBD3qA8derUIkNkijtZMj09vdgvTNeqYsWKsixLr7/+erFfCmvVqiWpMNiP
+GzdO48aN0zfffKMPPvhA8+fPV7Vq1fTnP/854HUB4YBhDwAkSVOmTFHfvn0lSVFRUbr11ls1atQo
+eTwe7xUK7Ha7z3MSExO1fft2HT161Gf6u+++q+rVq+uGG25Q27Zt5Xa7i1wB4qOPPvrZmrZt26ZK
+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
++/YNZC1F2O12nTt3Tn/961913XXXSZKOHDmiN954QzfeeGORoOt0OhUdHX3V24lwBG6ccjiIinKo
+atXywS6jxFSqFBPsElCK6G+z0N9mCbf+rly5nBwOuyIiyCUXcgQ4p/kVfgcMGHDZ+a+//rpfxVws
+Li5OUVFR3uArSTfeeKOOHTumdu3aKT093Wf5jIwM1ahR46q3k+9yy+O55nLDRl6eS6dOnQt2GQFn
+t9tUqVKMTp/Okdtd9IRNhBf62yz0t1nCtb+zsrLlcrmVn+8OdikhxeUKbHv4FX7r1Knj89jlcumH
+H37Qd999p4EDBwakMEmKj49XXl6efvjhB91www2SpH379un6669XfHy85s2b57P89u3bNXTo0Kve
+jscjeUi/XgUej1yu8HkzuZjbXRDW+wdf9LdZ6G+zhFt/u90F8hR45Ckgk5Qkv8JvampqsdNnzZql
+Y8eOXVNBF6pfv75uvfVWpaSkaPz48UpPT1daWpqGDRumO+64Q9OmTdMLL7yge++9V2+++aays7PV
+vXv3gG0fAAAA4SWgI8V79+6tf/zjH4FcpaZNm6YbbrhB/fr105gxY/TAAw+oX79+qlChgubNm6ct
+W7YoKSlJu3btUlpaml9jfgEAAGAGv094K8727dsDepMLSapQoYImT56syZMnF5nXokULrVq1KqDb
+AwAAQPgK2AlvZ8+e1bfffqv777//mosCAAAASoJf4bd27dqyLN9r0EVEROiBBx7QXXfdFZDCAAAA
+gEDzK/wWNwQBAAAACHV+hd/Nmzdf8bKJiYn+bAIAAAAIOL/Cb//+/b3DHi68Pu7F0yzL0p49e661
+RgAAACAg/Aq/c+fO1cSJEzVq1Ci1bdtWkZGR2rVrlyZMmKA+ffqoR48ega4TAAAAuGZ+Xec3NTVV
+48aN029+8xtVrVpV5cuX180336wJEybozTffVJ06dbx/AAAAgFDhV/g9ceJEscG2QoUKOnXq1DUX
+BQAAAJQEv8JvfHy8pk+frrNnz3qnZWZmaurUqWrfvn3AigMAAAACya8xv88++6wGDBigzp07q379
++pKkAwcOqEaNGnr99dcDWR8AAAAQMH6F34YNG+r999/XmjVrtG/fPknS/fffr9/+9reKiYkJaIEA
+AABAoPgVfiWpcuXK6tu3rw4fPqy6detKKrzLGwAAABCq/Brz6/F4NG3aNCUmJqpnz546duyYRo8e
+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
+1PSh/wAAAABJRU5ErkJggg==
+"
+>
+</div>
+
 </div>
 
 </div>

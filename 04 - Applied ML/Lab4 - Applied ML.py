@@ -13,6 +13,7 @@ get_ipython().magic('matplotlib inline')
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 get_ipython().magic('load_ext autoreload')
 get_ipython().magic('autoreload 2')
 
@@ -195,11 +196,6 @@ print("loss of refs with our method : ", referee_a_once_player / referee_b)
 
 # In[22]:
 
-import seaborn as sns
-
-
-# In[23]:
-
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(12, 4))
 axes.hist(df[["refNum", "games"]].groupby("refNum").sum().games.tolist(),referee_b-11)
 axes.set_xscale('symlog') # symetric log scale 
@@ -211,7 +207,7 @@ axes.set_xlabel('log (number of occurances)')
 axes.set_ylabel('log (frequency)')
 
 
-# In[24]:
+# In[23]:
 
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(12, 4))
 axes.hist(df_sup21_tot[["refNum", "games"]].groupby("refNum").sum().games.tolist(),referee_b-11)
@@ -224,7 +220,7 @@ axes.set_xlabel('log (number of occurances)')
 axes.set_ylabel('log (frequency)')
 
 
-# In[25]:
+# In[24]:
 
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(12, 4))
 axes.hist(df_sup21_once_player[["refNum", "games"]].groupby("refNum").sum().games.tolist(),referee_b-11)
@@ -239,7 +235,7 @@ axes.set_ylabel('log (frequency)')
 
 # We can clearly see here that we only remove the lowest occurences of the previous graph
 
-# In[26]:
+# In[25]:
 
 fig, ax = plt.subplots(1,1,figsize=(12, 4))
 x = df.refCountry.value_counts()
@@ -253,7 +249,7 @@ ax.set_ylabel('Frequency of dyads')
 ax.set_xlim([-3,160]) # a hack so we can see the first point most clearly
 
 
-# In[27]:
+# In[26]:
 
 fig, ax = plt.subplots(1,1,figsize=(12, 4))
 x = df_sup21_tot.refCountry.value_counts()
@@ -267,7 +263,7 @@ ax.set_ylabel('Frequency of dyads')
 ax.set_xlim([-3,160]) # a hack so we can see the first point most clearly
 
 
-# In[28]:
+# In[41]:
 
 # Histogram of country frequency. 
 fig, ax = plt.subplots(1,1,figsize=(12, 4))
@@ -288,54 +284,54 @@ ax.set_xlim([-3,160]) # a hack so we can see the first point most clearly
 
 # We know sometimes there is no images for a player and therefor no skin color rating. Therefore we remove them.
 
-# In[29]:
+# In[28]:
 
 df_with_pic = df_sup21_once_player[df_sup21_once_player["photoID"].notnull()]
 
 
-# In[30]:
+# In[29]:
 
 df_sup21_once_player.shape[0]
 
 
-# In[31]:
+# In[30]:
 
 df_with_pic.shape[0]
 
 
 # Should be all clean now.
 
-# In[32]:
+# In[31]:
 
 dfc = df_with_pic
 
 
 # ## Aggregating the data by player
 
-# In[33]:
+# In[32]:
 
 dfc.describe()
 
 
 # Let's look at a single players dyad to have an idea of what it looks like
 
-# In[34]:
+# In[33]:
 
 groups = dfc.groupby("playerShort")
 
 
-# In[35]:
+# In[34]:
 
 lucas = groups.get_group("lucas-wilchez")
 
 
-# In[36]:
+# In[35]:
 
 # Taken form http://nbviewer.jupyter.org/github/mathewzilla/redcard/blob/master/Crowdstorming_visualisation.ipynb 
 lucas.head().ix[:,:13]
 
 
-# In[37]:
+# In[36]:
 
 # Taken form http://nbviewer.jupyter.org/github/mathewzilla/redcard/blob/master/Crowdstorming_visualisation.ipynb 
 lucas.head().ix[:,13:]
@@ -350,7 +346,7 @@ lucas.head().ix[:,13:]
 #     
 # Why we kept other columns is explained below with the aggregation operation.
 
-# In[54]:
+# In[37]:
 
 # We only keep what we think are relevant columns.
 df_filtered = dfc[["playerShort","club", "leagueCountry", "height", "weight", "position", "games", "victories", 
@@ -358,7 +354,7 @@ df_filtered = dfc[["playerShort","club", "leagueCountry", "height", "weight", "p
                  "rater1", "rater2", "meanIAT", "seIAT", "meanExp", "seExp"]]
 
 
-# In[109]:
+# In[42]:
 
 df_grouped = df_filtered.groupby("playerShort").agg({
         "club": lambda x: x.unique()[0],
@@ -374,8 +370,8 @@ df_grouped = df_filtered.groupby("playerShort").agg({
         "yellowCards": np.sum,
         "yellowReds": np.sum,
         "redCards": np.sum,
-        "rater1": np.max, # never changes so we can take either min, max or mean
-        "rater2": np.max, # same here
+        "rater1": np.max, # never changes so we can take either min, max or mean 
+        "rater2": np.max, # same here (we used this to test that nothing changed : [np.min, np.max, np,mean])
         "meanIAT": np.mean, # Here doing the mean seems a bit confusing but it will give an 
         "seIAT": np.mean,   # indicatiion whether the player could have been mistreated in 
                             # some of his matches or never.
@@ -384,13 +380,13 @@ df_grouped = df_filtered.groupby("playerShort").agg({
     })
 
 
-# In[110]:
+# In[43]:
 
 # We used this to check wether min and max rating change for each player (which was not the case)
 #df_grouped[df_grouped["rater1", "amin"] != df_grouped["rater1", "amax"]]
 
 
-# In[111]:
+# In[44]:
 
 # We used this to test if some players had multiple clubs, league country or position. Which was not the case.
 #print(df_grouped["club"].apply(lambda x: x[0].shape).unique())
@@ -398,12 +394,12 @@ df_grouped = df_filtered.groupby("playerShort").agg({
 #print(df_grouped["position"].apply(lambda x: x[0].shape).unique())
 
 
-# In[112]:
+# In[45]:
 
 df_grouped.head()
 
 
-# In[113]:
+# In[46]:
 
 len(df_grouped)
 
@@ -417,7 +413,7 @@ len(df_grouped)
 
 # First we need to make rows which contain strings in integers (club, position, leagueCountry)
 
-# In[114]:
+# In[47]:
 
 from sklearn import preprocessing
 
@@ -437,19 +433,19 @@ encodeLabels("leagueCountry", df_grouped)
 
 # Now we can create the futur x and y for training
 
-# In[115]:
+# In[48]:
 
 y_possible = df_grouped[["rater1","rater2"]]
 y_possible.head()
 
 
-# In[133]:
+# In[49]:
 
 x = df_grouped.drop(y_possible, axis=1)
 x.head()
 
 
-# In[174]:
+# In[50]:
 
 def prepFeature(feature) :
     nans = True in x[feature].isnull().unique()
@@ -463,130 +459,325 @@ def prepFeature(feature) :
     ax.hist(x[feature].values)
 
 
-# In[175]:
+# In[51]:
 
 prepFeature("redCards")
 
 
-# In[176]:
+# In[52]:
 
 prepFeature("games")
 
 
-# In[177]:
+# In[53]:
 
 prepFeature("defeats")
 
 
-# In[178]:
+# In[54]:
 
 prepFeature("height")
 
 
-# In[179]:
+# In[55]:
 
 prepFeature("meanExp")
 
 
-# In[180]:
+# In[56]:
 
 prepFeature("goals")
 
 
-# In[181]:
+# In[57]:
 
 prepFeature("yellowCards")
 
 
-# In[182]:
+# In[58]:
 
 prepFeature("yellowReds")
 
 
-# In[183]:
+# In[59]:
 
 prepFeature("club")
 
 
-# In[184]:
+# In[60]:
 
 prepFeature("weight")
 
 
-# In[185]:
+# In[61]:
 
 prepFeature("seIAT")
 
 
-# In[186]:
+# In[62]:
 
 prepFeature("ties")
 
 
-# In[187]:
+# In[63]:
 
 prepFeature("leagueCountry")
 
 
-# In[188]:
+# In[64]:
 
 prepFeature("meanIAT")
 
 
-# In[189]:
+# In[65]:
 
 prepFeature("victories")
 
 
-# In[190]:
+# In[66]:
 
 prepFeature("seExp")
 
 
-# In[191]:
+# In[67]:
 
 prepFeature("position")
 
 
-# ## Naif machine learning
+# ## Naive machine learning
 
-# In[205]:
+# In[70]:
 
 from sklearn.ensemble import RandomForestClassifier as RFC
 from sklearn import metrics
 
 
-# In[206]:
+# In[71]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
 
 
-# Let's build y (in a naif fashion)
+# Let's build y (in a naive fashion for now)
 
-# In[207]:
+# In[80]:
 
-y = y_possible['rater1'] + y_possible['rater2'] / 2 < 0.5
-
-
-# In[208]:
-
-y.sum() / y.count()
+y = (y_possible['rater1'] + y_possible['rater2'] / 2 < 0.5).values
 
 
-# In[209]:
+# In[74]:
 
-rfc.fit(x, y.values)
+rfc.fit(x, y)
 
 
-# In[218]:
+# In[75]:
 
 y_pred = rfc.predict(x)
 
 
-# In[219]:
+# In[76]:
 
 print(metrics.mean_absolute_error(y, y_pred))
 print(metrics.accuracy_score(y, y_pred))
+
+
+# ### Ok so we're done here ! 99% seems reasonable, goodbye !
+
+#  
+
+#  
+
+#  
+
+#  
+
+# ## Ok just kidding let's get serious with this !
+
+# First let's really test the naive approach and see how it could perform in a "real" situation.
+
+# let's first split the dataset into a training and testing set. This seems to be generally a good practice in machine learning :).
+
+# In[149]:
+
+from sklearn.cross_validation import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=4)
+
+
+# In[150]:
+
+rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
+
+
+# In[151]:
+
+rfc.fit(x_train, y_train)
+
+
+# In[152]:
+
+y_pred = rfc.predict(x_test)
+
+
+# In[153]:
+
+print(metrics.mean_absolute_error(y_test, y_pred))
+print(metrics.accuracy_score(y_test, y_pred))
+
+
+# Ok that's kind of disapointing... (but not so much suprising)
+
+# Let's try to use some well known ML technics to understand what's going wrong.
+
+# In[162]:
+
+#rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
+
+
+# In[163]:
+
+# Cross validation 10-Fold (for now) with accuracy scoring
+from sklearn.cross_validation import cross_val_score
+scores = cross_val_score(rfc, x, y, cv=5, scoring='accuracy')
+
+
+# In[164]:
+
+def show_score(scores):
+    print(scores)
+    print("--------------------------")
+    print("mean :", np.mean(scores))
+    print("min :", np.min(scores))
+    print("max :", np.max(scores))
+
+show_score(scores)
+
+
+# We can see again that the result is not pretty, the best result we have is ~73% which is not much better than perdicting that all players are light skinned
+
+# proportions of classes for the mean rating (considering 1 -> $mean \leq 0.5$)
+
+# In[165]:
+
+# Proportion of light and dark skinned players
+prop_1 = np.sum(y) / len(y)
+prop_0 = 1 - prop_1
+print("proportion of ones :", prop_1)
+print("proportion of zeroes :", prop_0)
+
+
+# Ok now let's see what the confusion matrix has to say.
+
+# In[166]:
+
+confusion_mx = metrics.confusion_matrix(y_test, y_pred)
+TP = confusion_mx[1, 1]
+TN = confusion_mx[0, 0]
+FP = confusion_mx[0, 1]
+FN = confusion_mx[1, 0]
+
+
+# In[167]:
+
+confusion_mx
+
+
+# |total : 317| pred : 0 |  pred : 1  |
+# |---|----|-----|
+# | actual : 0 | TN = 37 | FP = 53 |
+# | actual : 1 | FN = 26 | TP = 201 |
+
+# We can see here that we are good at predicting ones, but our predictions of 0 are all over the place.
+
+# There is an easy way to show this : the **Specificity** (or how correct is the classifier with 0 values)
+
+# In[176]:
+
+specificity = TN / float(TN + FP)
+print("Specificity :", specificity)
+
+
+# We can compare it to **Sensitivity** (or true positive rate)
+
+# In[169]:
+
+sensitivity = TP / float(TP + FN)
+print("sensitivity :", sensitivity)
+
+
+# Which is much better. 
+# 
+# PS : all these methods are taken from the course and the calculations were found in this notebook : http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb
+
+# So, how are we going to do a better job ?
+
+# The first thing we realize is that there is a way to indicate to the random forest classifier the fact that there is a disparity within the data.
+
+# In[193]:
+
+class_weights = {
+    1 : prop_1*10,
+    0 : prop_0*10
+}
+
+
+# In[190]:
+
+rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=class_weights)
+
+
+# We will use a function that prints out most of the information we used above to test our new rfc 
+
+# In[200]:
+
+from helpers import test_rfc
+test_rfc(rfc, x, y)
+
+
+# Ok, to bad it's not better than before althought our sensitivity is a bit lower (which is reasonable)
+
+# Let's try something else : changing the classification threshold
+
+# We think this will help the **specificity** get higher.
+
+# let's retrain our data with our new rfc (with weights)
+
+# # NE RUN PAS ce qu'il y a en dessous de ça
+
+# In[201]:
+
+rfc.fit(x_train, y_train)
+y_pred = rfc.predict(x_test)
+
+
+# In[206]:
+
+y_pred_prob = rfc.predict_proba(x_test)[:, 1]
+
+
+# In[207]:
+
+y_pred * y_pred_prob
+
+
+# In[ ]:
+
+y_pred_prob_1 = 
+
+
+# In[202]:
+
+
+
+
+# In[205]:
+
+# histogram of predicted probabilities
+plt.hist(y_pred_prob_1, bins=8, alpha=0.7)
+plt.hist(y_pred_prob_0, bins=8, alpha=0.7, color="red")
+plt.xlim(0, 1)
+plt.title('Histogram of predicted probabilities')
+plt.xlabel('Predicted probability of diabetes')
+plt.ylabel('Frequency')
 
 
 # ### Some tips and tricks from the lab session.
