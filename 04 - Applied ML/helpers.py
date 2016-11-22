@@ -2,9 +2,88 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import metrics
 
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import Normalizer
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import learning_curve
+
+from sklearn.ensemble import RandomForestClassifier as RFC
+
+
+def clean_data(df):
+    apearances_once_player = df.refNum.value_counts()
+    apearances_sup21_once_player = apearances_once_player[apearances_once_player > 21]
+    df_sup21_once_player = df[df["refNum"].isin(apearances_sup21_once_player.index.values)]
+
+    df_with_pic = df_sup21_once_player[df_sup21_once_player["photoID"].notnull()]
+    
+    return df_with_pic
+
+def group_data(df):
+    # We only keep what we think are relevant columns.
+    df_filtered = df[["playerShort","club", "leagueCountry", "height", "weight", "position", "games", "victories", 
+                 "ties", "defeats", "goals", "yellowCards", "yellowReds", "redCards",
+                 "rater1", "rater2", "meanIAT", "seIAT", "meanExp", "seExp"]]
+    
+    df_grouped = df_filtered.groupby("playerShort").agg({
+        "club": lambda x: x.unique()[0],
+        "leagueCountry": lambda x: x.unique()[0],
+        "height": np.max,
+        "weight": np.max,
+        "position": lambda x: x.unique()[0],
+        "games": np.sum,
+        "victories": np.sum,
+        "ties": np.sum,
+        "defeats": np.sum,
+        "goals": np.sum,
+        "yellowCards": np.sum,
+        "yellowReds": np.sum,
+        "redCards": np.sum,
+        "rater1": np.max, # never changes so we can take either min, max or mean 
+        "rater2": np.max, # same here (we used this to test that nothing changed : [np.min, np.max, np,mean])
+        "meanIAT": np.mean, # Here doing the mean seems a bit confusing but it will give an 
+        "seIAT": np.mean,   # indicatiion whether the player could have been mistreated in 
+                            # some of his matches or never.
+        "meanExp": np.mean, # Same here
+        "seExp": np.mean    # We could have applied pooled variance (will see later) : https://en.wikipedia.org/wiki/Pooled_variance
+    })
+    
+    return df_grouped
+    
+def encodeLabels(col, df):
+    le = LabelEncoder()
+    le.fit(df[col].unique())
+    df[col] = le.transform(df[col])
+
+def prep_ML(df):
+
+    df["club"] = df["club"].astype(np.str)
+    df["position"] = df["position"].astype(np.str)
+    df["leagueCountry"] = df["leagueCountry"].astype(np.str)
+
+    encodeLabels("club", df)
+    encodeLabels("position", df)
+    encodeLabels("leagueCountry", df)
+    
+    for feature, col in df.iteritems():
+        has_nan = True in col.isnull().unique()
+        if has_nan:
+            df[feature] = col.fillna(int(col.mean()))
+
+    y_possible = df[["rater1","rater2"]]
+    x = df.drop(y_possible, axis=1)
+    
+    return x, y_possible
+
+def normalize(X, y):
+    normalizer = Normalizer()
+    for feature, col in X.iteritems():
+        has_nan = True in col.isnull().unique()
+        if has_nan:
+            X[feature] = normalizer.fit_transform(col, y)
+    
+    return X
 
 def show_score(scores):
     print("Cross validation scores")
@@ -125,6 +204,20 @@ def test_rfc_complete(rfc, x, y):
         # calculate cross-validated F1 score
         f1_mean = cross_val_score(rfc, x, y, cv=10, scoring='f1').mean()
         print("f1 score :", AUC_mean)
+        
+def compute_feature_importance_rfc(X, y):
+    prop1 = np.sum(y) / len(y)
+    prop0 = 1 - prop1
+    class_weights = {
+        0 : prop0,
+        1 : prop1
+    }
+    
+    feature_names = X.columns.values
+    # parmaters reported from notebook
+    rfc = RFC(max_features=0.8, n_estimators=33, n_jobs=-1, class_weight=class_weights)
+    rfc.fit(X, y)
+    return list(zip(feature_names, rfc.feature_importances_))
 
 def show_learning_curve(rfc, x, y):
 
