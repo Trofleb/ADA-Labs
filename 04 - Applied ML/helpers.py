@@ -14,6 +14,18 @@ def show_score(scores):
     print("cross min :", np.min(scores))
     print("cross max :", np.max(scores))
 
+def specificity(y, y_pred, **kwargs):
+    confusion_mx = metrics.confusion_matrix(y, y_pred)
+    TP = confusion_mx[1, 1]
+    TN = confusion_mx[0, 0]
+    FP = confusion_mx[0, 1]
+    FN = confusion_mx[1, 0]
+    
+    specificity = TN / float(TN + FP)
+    return specificity
+
+specificity_scorer = metrics.make_scorer(specificity)
+    
 def test_rfc(rfc, x, y):
     
     # Prep of training and testing sets
@@ -41,11 +53,12 @@ def test_rfc(rfc, x, y):
     print("FN :", FN)
     
     print("----------")
-    specificity = TN / float(TN + FP)
-    print("specificity :", specificity)
     
-    sensitivity = TP / float(TP + FN)
-    print("sensitivity :", sensitivity)
+    specificity = cross_val_score(rfc, x, y, cv=20, scoring=specificity_scorer)
+    print("specificity :", np.mean(specificity))
+    
+    recall = cross_val_score(rfc, x, y, cv=20, scoring='recall')
+    print("sensitivity or recall :", np.mean(recall))
 
 def test_rfc_complete(rfc, x, y):
     
@@ -72,14 +85,14 @@ def test_rfc_complete(rfc, x, y):
     print("FN :", FN, "TP :", TP, )
     
     print("----------")
-    specificity = TN / float(TN + FP)
-    print("specificity :", specificity)
+    specificity = cross_val_score(rfc, x, y, cv=20, scoring=specificity_scorer)
+    print("specificity :", np.mean(specificity))
     
-    sensitivity = TP / float(TP + FN)
-    print("sensitivity or recall :", sensitivity)
+    recall = cross_val_score(rfc, x, y, cv=20, scoring='recall')
+    print("sensitivity or recall :", np.mean(recall))
     
-    precision = TP / float(TP + FP)
-    print("precision :", precision)
+    precision = cross_val_score(rfc, x, y, cv=20, scoring='precision')
+    print("precision :", np.mean(precision))
     
     # getting the probability of ones of the classifier
     y_pred_prob = rfc.predict_proba(x_test)[:, 1]
@@ -97,15 +110,15 @@ def test_rfc_complete(rfc, x, y):
     plt.ylabel('Frequency')
     plt.show()
     
-    # Here we do something a bit wierd, in case of a 3 valued prediction
-    # we only keep the ones who belong to 0 and 1 to make the rest of
+    # Here we do something a bit wierd, in case of a 3 valued prediction 
+    # we only keep the ones who belong to 0 and 1 to make the rest of 
     # the function work
     if (len(confusion_mx) > 2):
         zipped = [(bool(x[0]), x[1]) for x in zip(y_test, y_pred_prob) if not x[0] == 2]
         # * is a way to unravel an array. With that zip unzips our previously zipped array (awesome right ;))
         y_test, y_pred_prob = zip(*zipped)
-    
-    # Code copied entirely from
+        
+    # Code copied entirely from 
     # http://nbviewer.jupyter.org/github/justmarkham/scikit-learn-videos/blob/master/09_classification_metrics.ipynb
     # There wasn't really another way to show that though :)
     fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred_prob)
@@ -127,7 +140,7 @@ def test_rfc_complete(rfc, x, y):
         print("f1 score :", AUC_mean)
 
 def show_learning_curve(rfc, x, y):
-    
+
     train_sizes, train_scores, test_scores = learning_curve(rfc, x, y, cv=20, n_jobs=-1)
     train_scores_mean = np.mean(train_scores, axis=1)
     test_scores_mean = np.mean(test_scores, axis=1)
