@@ -85,10 +85,8 @@ def prep_ML(df):
 def normalize(X, y):
     normalizer = Normalizer()
     for feature, col in X.iteritems():
-        has_nan = True in col.isnull().unique()
-        if has_nan:
-            X[feature] = normalizer.fit_transform(col, y)
-    
+        X[feature] = normalizer.fit_transform(col.reshape(-1,len(col)), y).T
+        
     return X
 
 def show_score(scores):
@@ -240,7 +238,7 @@ def test_rfc_complete(rfc, x, y):
 def compute_feature_importance_rfc(rfc, X, y):
     feature_names = X.columns.values
     rfc.fit(X, y)
-    return list(zip(feature_names, rfc.feature_importances_))
+    return sorted(list(zip(feature_names, rfc.feature_importances_)), key=lambda x: -x[1])
 
 def show_learning_curve(rfc, x, y):
 

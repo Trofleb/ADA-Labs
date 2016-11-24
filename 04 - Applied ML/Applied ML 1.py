@@ -931,7 +931,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y_3, test_size=0.2, rando
 # In[ ]:
 
 prop1 = np.sum(y_3) / len(y_3)
-prop0 = 1 - prop_1
+prop0 = 1 - prop1
 class_weights = {
     0 : prop0,
     1 : prop1
@@ -960,7 +960,7 @@ param_dist = dict(n_estimators=n_estimators_range,
 
 # In[ ]:
 
-rand = RandomizedSearchCV(rfc, param_dist, cv=10, scoring='roc_auc', n_iter=20, random_state=5)
+rand = RandomizedSearchCV(rfc, param_dist, cv=20, scoring='roc_auc', n_iter=20, random_state=5)
 rand.fit(x, y_3)
 
 
@@ -1105,10 +1105,6 @@ plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
 plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
          label="Cross-validation score")
 
-
-# # Conclusion
-
-# As we have seen through the whole notebook, due to the high proportion of white players, the prediction are fluctuating around this point and could not produce any significant results. Therefore we could not find any effective evidence of an existing skin color - card biais.  
 
 # # Learning curves ! ( Bonus )
 

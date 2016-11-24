@@ -11895,7 +11895,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We know that the most valuable feature is the mean_Exp therefore we will remove it (just for fun)</p>
+<p>We know that the most valuable feature is the seIAT therefore we will remove it (just for fun)</p>
 
 </div>
 </div>
@@ -11906,8 +11906,21 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">compute_feature_importance_rfc</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span> <span class="k">as</span> <span class="n">RFC</span>
 
-<span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+<span class="c1"># From previous exercice</span>
+
+<span class="n">prop1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">label_true</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_true</span><span class="p">)</span>
+<span class="n">prop0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prop1</span>
+<span class="n">class_weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="n">prop0</span><span class="p">,</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="n">prop1</span>
+<span class="p">}</span>
+
+<span class="n">best_results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
+
+<span class="n">rfc</span> <span class="o">=</span> <span class="n">RFC</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">],</span> <span class="n">max_features</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;max_features&quot;</span><span class="p">],</span> <span class="n">n_estimators</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span><span class="p">)</span>
+<span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11920,7 +11933,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;seIAT&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">s2</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s2 =&quot;</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s2 - s1 =&quot;</span><span class="p">,</span> <span class="n">s2</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
@@ -11936,7 +11949,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We have a better result... that's fun !</p>
+<p>We have a better classification... that's fun !</p>
 
 </div>
 </div>
@@ -11946,7 +11959,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ok now let's remove a second feature, we will follow the same intuition as before and remove the second best feature, the club information.</p>
+<p>Ok now let's remove a second feature, we will follow the same intuition as before and remove the second best feature</p>
 
 </div>
 </div>
@@ -11957,7 +11970,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we know from before that the mean_Exp and goal information is at position 8, and 7 respectively in the X array</span>
-<span class="n">X3</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;goals&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seIAT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">s3</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s3 =&quot;</span><span class="p">,</span> <span class="n">s3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s3 - s1 =&quot;</span><span class="p">,</span> <span class="n">s3</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
@@ -11985,7 +11998,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we now remove seExp in addition to the other 2 (3rd best feature)</span>
-<span class="n">X4</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;goals&quot;</span><span class="p">,</span> <span class="s2">&quot;seIAT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X4</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seIAT&quot;</span><span class="p">,</span> <span class="s2">&quot;meanIAT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">s4</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X4</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 =&quot;</span><span class="p">,</span> <span class="n">s4</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 - s1 =&quot;</span><span class="p">,</span> <span class="n">s4</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
@@ -12013,8 +12026,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">scoring_complete</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-    <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">scoring_complete</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
     <span class="n">km</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;silhouette score :&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">))</span>
@@ -12027,16 +12041,6 @@ div#notebook {
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We have a very low closeness score but at least it's positive.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -12066,7 +12070,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Other example :</p>
+<p>Other examples :</p>
 
 </div>
 </div>
@@ -12102,18 +12106,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Clearly here we are changinging the biais of the clustering algorithm (with respect to our "true" labels) <strong>TODO : verify this !</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now let's remove the worse features for example the red / yellow / redYellow / cards (not all are the absolute worst but they were all in the &lt; 0.05 importance in the previous exercice.)</p>
-<p>rows : 8, 10, 11</p>
 
 </div>
 </div>
@@ -12137,7 +12130,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We have good results ! the silhouette is good and closeness has improved.</p>
+<p>We have good results ! the silhouette is better. And closeness is much better</p>
 
 </div>
 </div>
@@ -12157,7 +12150,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">X5</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X5</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12170,7 +12163,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X6</span> <span class="o">=</span>  <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">,</span> <span class="s2">&quot;redCards&quot;</span><span class="p">,</span> <span class="s2">&quot;yellowCards&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X6</span> <span class="o">=</span>  <span class="n">X5</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">scoring_complete</span><span class="p">(</span><span class="n">X6</span><span class="p">)</span>
 </pre></div>
 
@@ -12184,7 +12177,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">X6</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span><span class="n">X6</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12197,7 +12190,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X7</span> <span class="o">=</span>  <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">,</span> <span class="s2">&quot;redCards&quot;</span><span class="p">,</span> <span class="s2">&quot;yellowCards&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X7</span> <span class="o">=</span>  <span class="n">X6</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;defeats&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">scoring_complete</span><span class="p">(</span><span class="n">X7</span><span class="p">)</span>
 </pre></div>
 
@@ -12211,7 +12204,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">X7</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X7</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12224,7 +12217,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X8</span> <span class="o">=</span>  <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">,</span> <span class="s2">&quot;redCards&quot;</span><span class="p">,</span> <span class="s2">&quot;yellowCards&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="s2">&quot;defeats&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X8</span> <span class="o">=</span>  <span class="n">X7</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;weight&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">scoring_complete</span><span class="p">(</span><span class="n">X8</span><span class="p">)</span>
 </pre></div>
 
@@ -12238,7 +12231,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">X8</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X8</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12251,8 +12244,116 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X9</span> <span class="o">=</span>  <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">,</span> <span class="s2">&quot;redCards&quot;</span><span class="p">,</span> <span class="s2">&quot;yellowCards&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="s2">&quot;defeats&quot;</span><span class="p">,</span> <span class="s2">&quot;ties&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X9</span> <span class="o">=</span>  <span class="n">X8</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;ties&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">scoring_complete</span><span class="p">(</span><span class="n">X9</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X9</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X10</span> <span class="o">=</span>  <span class="n">X9</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;goals&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X10</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X11</span> <span class="o">=</span>  <span class="n">X10</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;club&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X11</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X11</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X12</span> <span class="o">=</span>  <span class="n">X11</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;birthday&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X12</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X12</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X13</span> <span class="o">=</span>  <span class="n">X12</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;victories&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X13</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12265,36 +12366,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We stop here as we have the worst result.</p>
+<p>Removing more gives worse results or equal results.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X8</span><span class="p">[</span><span class="s2">&quot;club&quot;</span><span class="p">],</span> <span class="n">X8</span><span class="p">[</span><span class="s2">&quot;meanExp&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
