@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import metrics
+import datetime
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Normalizer
@@ -66,6 +67,9 @@ def prep_ML(df):
     encodeLabels("position", df)
     encodeLabels("leagueCountry", df)
     
+    today = datetime.datetime.now()
+    df_grouped.birthday = df_grouped.birthday.apply(lambda x : (today - pd.to_datetime(x)).days)
+    
     for feature, col in df.iteritems():
         has_nan = True in col.isnull().unique()
         if has_nan:
@@ -115,7 +119,7 @@ def test_rfc(rfc, x, y):
     y_pred = rfc.predict(x_test)
     
     # Cross validation 10-Fold (for now) with accuracy scoring
-    scores = cross_val_score(rfc, x, y, cv=5, scoring='accuracy')
+    scores = cross_val_score(rfc, x, y, cv=20, scoring='accuracy')
     show_score(scores)
     
     # Let's compute the convolution matrix
@@ -142,7 +146,8 @@ def test_rfc(rfc, x, y):
 def test_rfc_complete(rfc, x, y):
     
     # Cross validation 10-Fold (for now) with accuracy scoring
-    scores = cross_val_score(rfc, x, y, cv=10, scoring='accuracy')
+    print("computing cross validation for accuracy")
+    scores = cross_val_score(rfc, x, y, cv=20, scoring='accuracy')
     show_score(scores)
     
     # Prep of training and testing sets
@@ -152,6 +157,7 @@ def test_rfc_complete(rfc, x, y):
     rfc.fit(x_train, y_train)
     y_pred = rfc.predict(x_test)
     
+    print("computing confusion matrix")
     # Let's compute the convolution matrix
     confusion_mx = metrics.confusion_matrix(y_test, y_pred)
     TP = confusion_mx[1, 1]
@@ -165,12 +171,15 @@ def test_rfc_complete(rfc, x, y):
     
     print("----------")
     
+    print("computing cross validation for specificity")
     specificity = cross_val_score(rfc, x, y, cv=20, scoring=specificity_scorer)
     print("specificity :", np.mean(specificity))
     
+    print("computing cross validation for recall")
     recall = cross_val_score(rfc, x, y, cv=20, scoring='recall')
     print("sensitivity or recall :", np.mean(recall))
     
+    print("computing cross validation for precision")
     precision = cross_val_score(rfc, x, y, cv=20, scoring='precision')
     print("precision :", np.mean(precision))
     
@@ -213,25 +222,23 @@ def test_rfc_complete(rfc, x, y):
     
     if (len(confusion_mx) == 2):
         # calculate cross-validated AUC score
-        AUC_mean = cross_val_score(rfc, x, y, cv=10, scoring='roc_auc').mean()
+        print("computing cross validation for AUC")
+        AUC_mean = cross_val_score(rfc, x, y, cv=20, scoring='roc_auc').mean()
         print("AUC score :", AUC_mean)
         # calculate cross-validated F1 score
-        f1_mean = cross_val_score(rfc, x, y, cv=10, scoring='f1').mean()
+        print("computing cross validation for f1_mean")
+        f1_mean = cross_val_score(rfc, x, y, cv=20, scoring='f1').mean()
+        print("f1 score :", AUC_mean)
+        # calculate cross-validated F2 score
+        print("computing cross validation for f1_mean")
+        f1_mean = cross_val_score(rfc, x, y, cv=20, scoring='f1').mean()
         print("f1 score :", AUC_mean)
         
-def compute_feature_importance_rfc(X, y):
-    prop1 = np.sum(y) / len(y)
-    prop0 = 1 - prop1
-    class_weights = {
-        0 : prop0,
-        1 : prop1
-    }
-    
+        
+def compute_feature_importance_rfc(rfc, X, y):
     feature_names = X.columns.values
-    # parmaters reported from notebook
-    rfc = RFC(max_features=0.8, n_estimators=33, n_jobs=-1, class_weight=class_weights)
     rfc.fit(X, y)
-    return list(zip(feature_names, rfc.feature_importances_)
+    return list(zip(feature_names, rfc.feature_importances_))
 
 def show_learning_curve(rfc, x, y):
 
