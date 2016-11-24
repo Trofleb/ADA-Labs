@@ -3,11 +3,11 @@
 
 # # Applied Machine learning !
 
-# In this lab we will study a soccer dataset and apply Machine Learning to it. We will try to predict the skin color of a player given some of it's information.
+# In this lab we will study a soccer dataset and apply Machine Learning to it. We will try to predict the skin color of a player given some of its information.
 
 # ### Some useful imports
 
-# In[ ]:
+# In[1]:
 
 get_ipython().magic('matplotlib inline')
 import pandas as pd
@@ -30,33 +30,33 @@ get_ipython().magic('autoreload 2')
 
 # ### First we import the dataset and study it :
 
-# In[ ]:
+# In[2]:
 
 df = pd.read_csv("./CrowdstormingDataJuly1st.csv")
 
 
 # How much data do we have ?
 
-# In[ ]:
+# In[3]:
 
 df.shape
 
 
 # Let's look at our columns.
 
-# In[ ]:
+# In[4]:
 
 df.head().ix[:,:13]
 
 
-# In[ ]:
+# In[5]:
 
 df.head().ix[:,13:]
 
 
 # There are two different skin-color (from white to black) raters, that agree on percentage:
 
-# In[ ]:
+# In[6]:
 
 np.count_nonzero(df.rater1 == df.rater2) / len(df)
 
@@ -81,9 +81,9 @@ np.count_nonzero(df.rater1 == df.rater2) / len(df)
 
 # ## Removing non valid dyads from player past history
 
-# To remove those dyad, the logic is to say that if a referee has participated in at least one match in the league he should have at least 22 appearances in the dataset.
+# To remove those dyads, the logic is to say that if a referee has participated in at least one match in the league he should have at least 22 appearances in the dataset.
 
-# In[ ]:
+# In[7]:
 
 dyads_b = df.shape[0]
 games_b = df.games.sum()
@@ -93,9 +93,9 @@ print("number of matches before cleaning : ", games_b)
 print("number of unique referee before cleaning : ", referee_b)
 
 
-# Using cited work number for comparison, after cleaning they got:
+# Using cited work numbers for comparison, after cleaning they got:
 
-# In[ ]:
+# In[8]:
 
 games_a_tot = 415692
 dyads_a_tot = 137635
@@ -104,19 +104,19 @@ referee_a_tot = 1261
 
 # Our method (group by player short):
 
-# In[ ]:
+# In[9]:
 
 apearances_once_player = df.refNum.value_counts()
 len(apearances_once_player)
 
 
-# In[ ]:
+# In[10]:
 
 apearances_sup21_once_player = apearances_once_player[apearances_once_player >= 22]
 df_sup21_once_player = df[df["refNum"].isin(apearances_sup21_once_player.index.values)]
 
 
-# In[ ]:
+# In[11]:
 
 dyads_a_once_player = df_sup21_once_player.shape[0]
 games_a_once_player = df_sup21_once_player.games.sum()
@@ -128,14 +128,14 @@ print("number of unique referee after removing : ", referee_a_once_player)
 
 # Let's show how much data we lose
 
-# In[ ]:
+# In[12]:
 
 print("loss of games with their method :", games_a_tot / games_b)
 print("loss of dyads with their method :", dyads_a_tot / dyads_b)
 print("loss of refs with their method : ", referee_a_tot / referee_b)
 
 
-# In[ ]:
+# In[13]:
 
 print("loss of games with our method :", games_a_once_player / games_b)
 print("loss of dyads with our method :", dyads_a_once_player / dyads_b)
@@ -144,7 +144,7 @@ print("loss of refs with our method : ", referee_a_once_player / referee_b)
 
 # We lost a bit more data but it will be more convient to use later. Let's check using the same kind of occurences graph.
 
-# In[ ]:
+# In[14]:
 
 plt.hist(df[["refNum", "games"]].groupby("refNum").sum().games.tolist(), referee_b-11)
 plt.xscale('log')
@@ -155,7 +155,7 @@ plt.title("Referee occurance using the original dataframe (df)")
 plt.show()
 
 
-# In[ ]:
+# In[15]:
 
 plt.hist(df_sup21_once_player[["refNum", "games"]].groupby("refNum").sum().games.tolist(), referee_b-11)
 plt.xscale('log')
@@ -168,7 +168,7 @@ plt.title("Referee occurance using the dataframe where a single appearance is co
 plt.show()
 
 
-# In[ ]:
+# In[16]:
 
 x = df.refCountry.value_counts()
 lines = plt.plot(x.values, marker='.', ms=20)
@@ -179,7 +179,7 @@ plt.ylabel('Frequency of dyads')
 plt.show()
 
 
-# In[ ]:
+# In[17]:
 
 x = df_sup21_once_player.refCountry.value_counts()
 lines = plt.plot(x.values, marker='.', ms=20)
@@ -194,55 +194,55 @@ plt.show()
 
 # ## Removing non usable data for our ML algorithm
 
-# We know sometimes there is no images for a player and therefor no skin color rating. Therefore we remove them.
+# We know sometimes there is no image for a player and therefore no skin color rating, which is why we remove them.
 
-# In[ ]:
+# In[18]:
 
 df_with_pic = df_sup21_once_player[df_sup21_once_player["photoID"].notnull()]
 
 
-# In[ ]:
+# In[19]:
 
 df_sup21_once_player.shape[0]
 
 
-# In[ ]:
+# In[20]:
 
 df_with_pic.shape[0]
 
 
 # Should be all clean now.
 
-# In[ ]:
+# In[21]:
 
 dfc = df_with_pic
 
 
 # ## Aggregating the data by player
 
-# Let's look at a single players dyad to have an idea of what it looks like
+# Let's look at a single player's dyads to have an idea of what they look like.
 
-# In[ ]:
+# In[22]:
 
 groups = dfc.groupby("playerShort")
 
 
-# In[ ]:
+# In[23]:
 
 lucas = groups.get_group("lucas-wilchez")
 
 
-# In[ ]:
+# In[24]:
 
 lucas.head().ix[:,:13]
 
 
-# In[ ]:
+# In[25]:
 
 lucas.head().ix[:,13:]
 
 
-# First we will only keep the columns that seem relevant to us and remove the ones we think are not important :
+# First we will only keep the columns that seem relevant to us and remove the others :
 # - `player` which is a repetition of the playershort
 # - `photoID` which is 1-to-1 with the player
 # - referee related attibutes which cannot be aggregated (`refNum`, `refCountry`, `Alpha3`)
@@ -250,7 +250,7 @@ lucas.head().ix[:,13:]
 #     
 # Why we kept other columns is explained below with the aggregation operation.
 
-# In[ ]:
+# In[26]:
 
 df_byshort = dfc.groupby("playerShort")
 df_grouped = df_byshort.agg({
@@ -278,48 +278,48 @@ df_grouped = df_byshort.agg({
     })
 
 
-# In[ ]:
+# In[27]:
 
 # We used this to check wether min and max rating change for each player (which was not the case)
 np.count_nonzero(df_byshort.agg({"rater1": np.min}) != df_byshort.agg({"rater1": np.max}))
 
 
-# In[ ]:
+# In[28]:
 
 np.count_nonzero(df_byshort.agg({"rater2": np.min}) != df_byshort.agg({"rater2": np.max}))
 
 
-# In[ ]:
+# In[29]:
 
 np.count_nonzero(df_byshort.agg({"position": lambda x: x.unique().shape[0]}) > 1)
 
 
-# In[ ]:
+# In[30]:
 
 np.count_nonzero(df_byshort.agg({"leagueCountry": lambda x: x.unique().shape[0]}) > 1)
 
 
-# In[ ]:
+# In[31]:
 
 np.count_nonzero(df_byshort.agg({"club": lambda x: x.unique().shape[0]}) > 1)
 
 
-# In[ ]:
+# In[32]:
 
 np.count_nonzero(df_byshort.agg({"birthday": lambda x: x.unique().shape[0]}) > 1)
 
 
-# In[ ]:
+# In[33]:
 
 df_grouped.head().ix[:,:13]
 
 
-# In[ ]:
+# In[34]:
 
 df_grouped.head().ix[:,13:]
 
 
-# In[ ]:
+# In[35]:
 
 len(df_grouped)
 
@@ -333,7 +333,7 @@ len(df_grouped)
 
 # First we need to make rows which contain strings in integers (club, position, leagueCountry)
 
-# In[ ]:
+# In[36]:
 
 df_grouped["club"] = df_grouped["club"].astype(np.str)
 df_grouped["position"] = df_grouped["position"].astype(np.str)
@@ -349,7 +349,7 @@ encodeLabels("position", df_grouped)
 encodeLabels("leagueCountry", df_grouped)
 
 
-# In[ ]:
+# In[37]:
 
 today = datetime.datetime.now()
 df_grouped.birthday = df_grouped.birthday.apply(lambda x : float((today - pd.to_datetime(x)).days))
@@ -357,24 +357,24 @@ df_grouped.birthday = df_grouped.birthday.apply(lambda x : float((today - pd.to_
 
 # Now we can create the futur x and y for training
 
-# In[ ]:
+# In[38]:
 
 y_possible = df_grouped[["rater1","rater2"]]
 y_possible.head()
 
 
-# In[ ]:
+# In[39]:
 
 x = df_grouped.drop(y_possible, axis=1)
 x.head().ix[:,:13]
 
 
-# In[ ]:
+# In[40]:
 
 x.head().ix[:,13:]
 
 
-# In[ ]:
+# In[41]:
 
 for feature, col in x.iteritems():
         has_nan = True in col.isnull().unique()
@@ -384,36 +384,36 @@ for feature, col in x.iteritems():
 
 # ## Naive machine learning
 
-# In[ ]:
+# In[42]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=None)
 
 
 # Let's build y (in a naive fashion for now) and use sklearn normalizer with the y's.
 
-# In[ ]:
+# In[43]:
 
 y = ((y_possible['rater1'] + y_possible['rater2']) / 2 < 0.5).values
 
 
-# In[ ]:
+# In[44]:
 
 normalizer = Normalizer()
 for feature, col in x.iteritems():
     x[feature] = normalizer.fit_transform(col.reshape(-1,len(col)), y).T
 
 
-# In[ ]:
+# In[45]:
 
 rfc.fit(x, y)
 
 
-# In[ ]:
+# In[46]:
 
 y_pred = rfc.predict(x)
 
 
-# In[ ]:
+# In[47]:
 
 print(metrics.mean_absolute_error(y, y_pred))
 print(metrics.accuracy_score(y, y_pred))
@@ -425,27 +425,27 @@ print(metrics.accuracy_score(y, y_pred))
 
 # Let's first split the dataset into a training and testing set. This seems to be generally a good practice in machine learning :).
 
-# In[ ]:
+# In[48]:
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=4)
 
 
-# In[ ]:
+# In[49]:
 
 rfc = RFC(n_estimators=10, class_weight=None)
 
 
-# In[ ]:
+# In[50]:
 
 rfc.fit(x_train, y_train)
 
 
-# In[ ]:
+# In[51]:
 
 y_pred = rfc.predict(x_test)
 
 
-# In[ ]:
+# In[52]:
 
 print(metrics.mean_absolute_error(y_test, y_pred))
 print(metrics.accuracy_score(y_test, y_pred))
@@ -453,13 +453,13 @@ print(metrics.accuracy_score(y_test, y_pred))
 
 # Ok that's kind of disapointing... (but not so much suprising). A better way to show the error is cross validation.
 
-# In[ ]:
+# In[53]:
 
 # Cross validation 10-Fold (for now) with accuracy scoring
 scores = cross_val_score(rfc, x, y, cv=10, scoring='accuracy')
 
 
-# In[ ]:
+# In[54]:
 
 def show_score(scores):
     print(scores)
@@ -471,11 +471,11 @@ def show_score(scores):
 show_score(scores)
 
 
-# We can see again that the result is not pretty, the mean result we have is ~76% which is not much better than perdicting that all players are light skinned.
+# We can see again that the result is not pretty, the mean result we have is ~76% which is not much better than predicting that all players are light skinned.
 
 # Proportions of classes for the mean rating (considering 1 -> $mean \leq 0.5$).
 
-# In[ ]:
+# In[55]:
 
 # Proportion of light and dark skinned players
 prop_1 = np.sum(y) / len(y)
@@ -486,7 +486,7 @@ print("proportion of zeroes :", prop_0)
 
 # Let's look at what the confusion matrix has to say.
 
-# In[ ]:
+# In[56]:
 
 confusion_mx = metrics.confusion_matrix(y_test, y_pred)
 TP = confusion_mx[1, 1]
@@ -495,7 +495,7 @@ FP = confusion_mx[0, 1]
 FN = confusion_mx[1, 0]
 
 
-# In[ ]:
+# In[57]:
 
 confusion_mx
 
@@ -507,11 +507,11 @@ confusion_mx
 # | actual : 0 | TN = 24 | FP = 52 |
 # | actual : 1 | FN = 25 | TP = 216 |
 
-# We can see here that we are good at predicting ones, but our predictions of 0 are all over the place.
+# We can see here that we are good at predicting 1s, but our predictions of 0s are all over the place.
 
 # There is an easy way to show this : the **Specificity** (or how correct is the classifier with 0 values)
 
-# In[ ]:
+# In[58]:
 
 specificity = TN / float(TN + FP)
 print("Specificity :", specificity)
@@ -535,7 +535,7 @@ print("Cross validated specificity :", np.mean(specificity))
 
 # We can compare it to **Sensitivity** (or true positive rate)
 
-# In[ ]:
+# In[59]:
 
 sensitivity = TP / float(TP + FN)
 print("Sensitivity :", sensitivity)
@@ -551,9 +551,9 @@ print("Cross validated sensitivity or recall :", np.mean(recall))
 
 # So, how are we going to do a better job ?
 
-# The first thing we realize is that there is a way to indicate to the random forest classifier the fact that there is a disparity within the data.
+# The first thing we realize is that there is a way to indicate to the random forest classifier that there is a disparity within the data.
 
-# In[ ]:
+# In[60]:
 
 class_weights = {
     1 : prop_1,
@@ -561,20 +561,20 @@ class_weights = {
 }
 
 
-# In[ ]:
+# In[61]:
 
 rfc = RFC(n_estimators=10, n_jobs=-1, class_weight=class_weights)
 
 
 # We will use a function that prints out most of the information we used above to test our new rfc 
 
-# In[ ]:
+# In[62]:
 
 from helpers import test_rfc
 test_rfc(rfc, x, y)
 
 
-# Ok, to bad it's not really an improvement.
+# Ok, too bad it's not really an improvement.
 
 # Let's try something else : changing the classification threshold
 
@@ -582,7 +582,7 @@ test_rfc(rfc, x, y)
 
 # Let's retrain our data with our new rfc (with weights)
 
-# In[ ]:
+# In[63]:
 
 rfc.fit(x_train, y_train)
 y_pred = rfc.predict(x_test)
@@ -590,14 +590,14 @@ y_pred = rfc.predict(x_test)
 
 # Getting the probability of ones of the classifier
 
-# In[ ]:
+# In[64]:
 
 y_pred_prob = rfc.predict_proba(x_test)[:, 1]
 
 
 # Separating the probability of true and false values
 
-# In[ ]:
+# In[65]:
 
 y_pred_prob1 = [x[1] for x in zip(y_test, y_pred_prob) if x[0]]
 y_pred_prob0 = [x[1] for x in zip(y_test, y_pred_prob) if not x[0]]
@@ -609,7 +609,7 @@ y_pred_prob0 = [x[1] for x in zip(y_test, y_pred_prob) if not x[0]]
 # 
 # It shows in blue the probability given to the true 0 values and in red the probability of true 1 values.
 
-# In[ ]:
+# In[66]:
 
 # histogram of predicted probabilities
 plt.hist(y_pred_prob1, bins=10, alpha=0.6, color="red")
@@ -620,11 +620,11 @@ plt.xlabel('Predicted probabilities')
 plt.ylabel('Frequency')
 
 
-# With this graph we realized that it's going to be very difficult to have a good and fair (in terms of specificity and sensitivity) 
+# With this graph we realized that it's going to be very difficult to have a good and fair model(in terms of specificity and sensitivity) 
 
 # To verify this fact we are going to use the ROC curve and the AUC (Area Under the Curve) metric
 
-# In[ ]:
+# In[67]:
 
 fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred_prob)
 plt.plot(fpr, tpr)
@@ -633,7 +633,7 @@ plt.xlabel('False Positive Rate (1 - Specificity)')
 plt.ylabel('True Positive Rate (Sensitivity)')
 
 
-# In[ ]:
+# In[68]:
 
 # calculate cross-validated AUC score
 AUC_mean = cross_val_score(rfc, x, y, cv=10, scoring='roc_auc').mean()
@@ -644,11 +644,11 @@ print("AUC score :", AUC_mean)
 
 # First the ROC curve shows us what are the best compromises we can make between Specificity and Sensitivity (be aware that here specificity is inversed), with that you could chose precisely what you want the classifier to be compromising.
 
-# For the AUC score it shows a score of our model compared to a random sampling of 1's and 0's. (PS. the random sample is weighted of course)
+# For the AUC score it shows a score of our model compared to a random sampling of 1's and 0's. (NB: the random sample is weighted of course)
 
 # Ok now we have all the tools to try and accuratly validate a method
 
-# In[ ]:
+# In[69]:
 
 test_rfc_complete(rfc, x, y)
 
@@ -657,19 +657,19 @@ test_rfc_complete(rfc, x, y)
 
 # In this part we try to modify our model to have better result.
 # 
-# We have a lot of parameter to test for the random classifier, we selected two of them we think could change the results of the model.
+# We have a lot of parameters to test for the random classifier, we selected two of them we think could change the results of the model.
 #  
 # The parameters we will test : 
 #   - n_estimators
 #   - max_features
 #   - max_depth
 
-# In[ ]:
+# In[70]:
 
 rfc = RFC(n_estimators=10, max_features=None, n_jobs=-1, class_weight=class_weights)
 
 
-# In[ ]:
+# In[71]:
 
 n_estimators_range = list(range(10,40))
 max_features_range = uniform()
@@ -677,30 +677,30 @@ param_dist = dict(n_estimators=n_estimators_range,
                   max_features=max_features_range)
 
 
-# In[ ]:
+# In[72]:
 
 rand = RandomizedSearchCV(rfc, param_dist, cv=20, scoring='roc_auc', n_iter=20, random_state=5)
 rand.fit(x, y)
 
 
-# In[ ]:
+# In[73]:
 
 rand.best_params_
 
 
-# In[ ]:
+# In[74]:
 
 rand.best_score_
 
 
-# After reading a bit more about the classifier (Sklearn doc) apparently sqrt as max_features works best for classification, let's test that and with log2 as we haave the option.
+# After reading a bit more about the classifier (Sklearn doc) apparently sqrt as max_features works best for classification, let's test that and with log2 as we have the option.
 
-# In[ ]:
+# In[75]:
 
 rfc = RFC(n_estimators=10, max_features="sqrt", n_jobs=-1, class_weight=class_weights)
 
 
-# In[ ]:
+# In[76]:
 
 n_estimators_range = list(range(20,40))
 max_features_range = ["sqrt", "log2"]
@@ -710,47 +710,47 @@ param_dist = dict(n_estimators=n_estimators_range,
                  max_depth=max_depth_range)
 
 
-# In[ ]:
+# In[77]:
 
 rand = RandomizedSearchCV(rfc, param_dist, cv=10, scoring='roc_auc', n_iter=20, random_state=5)
 rand.fit(x, y)
 
 
-# In[ ]:
+# In[78]:
 
 #removed as not relevant and screen clutering if you're interested uncomment it
 #rand.cv_results_
 
 
-# In[ ]:
+# In[79]:
 
 rand.best_params_
 
 
-# In[ ]:
+# In[80]:
 
 rand.best_score_
 
 
-# In[ ]:
+# In[81]:
 
 max_features_b = rand.best_params_["max_features"]
 n_estimators_b = rand.best_params_["n_estimators"]
 max_depth_b = rand.best_params_["max_depth"]
 
 
-# In[ ]:
+# In[82]:
 
 test_rfc_complete(RFC(max_features=max_features_b, n_estimators=n_estimators_b, max_depth=max_depth_b, n_jobs=-1, class_weight=class_weights), x, y)
 
 
-# We should have with this method the best AUC score we could have. Which is still not really an improvement... (we will reuse this method later) our accuracy went closer to 90% though
+# We should have with this method the best AUC score. Which is still not really an improvement... (we will reuse this method later) our accuracy got closer to 90% though
 
 # ## Raters changes
 
 # As we said earlier in this notebook there are some things we can tune with the raters data we have. As we know the two raters have the following specificities :
 # - they rate differently
-# - they have values [0,0.25,0.5,0.75,1]
+# - they have discrete values [0,0.25,0.5,0.75,1]
 # 
 # There are a few things we want to test : 
 # - a class for each possible value of the raters
@@ -758,18 +758,18 @@ test_rfc_complete(RFC(max_features=max_features_b, n_estimators=n_estimators_b, 
 # - an independent learning for both raters
 # - only keeping the values where rater 1 and 2 are identical
 # 
-# We will test some different mix below
+# We will test some different mixes below
 
 # ### A cluster for each value with independent raters
 
 # Here we will try predicting the 5 possible classes for one of the raters.
 
-# In[ ]:
+# In[83]:
 
 y_1 = (y_possible['rater1']).values
 
 
-# In[ ]:
+# In[84]:
 
 le = LabelEncoder()
 le.fit(np.unique(y_1))
@@ -777,29 +777,29 @@ y_1 = le.transform(y_1)
 y_1
 
 
-# In[ ]:
+# In[85]:
 
 x_train, x_test, y_train, y_test = train_test_split(x, y_1, test_size=0.2, random_state=4)
 
 
 # We use the best parameters we found before (they may need a twist later as the model changes)
 
-# In[ ]:
+# In[86]:
 
 rfc = RFC(max_features=max_features_b, n_estimators=n_estimators_b, n_jobs=-1)
 
 
-# In[ ]:
+# In[87]:
 
 rfc.fit(x_train, y_train)
 
 
-# In[ ]:
+# In[88]:
 
 y_pred = rfc.predict(x_test)
 
 
-# In[ ]:
+# In[89]:
 
 scores = cross_val_score(rfc, x, y, cv=20, scoring='accuracy')
 show_score(scores)
@@ -809,7 +809,7 @@ show_score(scores)
 
 # We will not make an emphasis on this but here is the confusion matrix.
 
-# In[ ]:
+# In[90]:
 
 metrics.confusion_matrix(y_pred=y_pred, y_true=y_test)
 
@@ -818,17 +818,17 @@ metrics.confusion_matrix(y_pred=y_pred, y_true=y_test)
 
 # Let's look a bit more at the raters :
 
-# In[ ]:
+# In[91]:
 
 diff = [x[0] - x[1] for x in zip((y_possible['rater2']).values,(y_possible['rater1']).values) if not x[0] == x[1]]
 
 
-# In[ ]:
+# In[92]:
 
 diff = np.abs(diff)
 
 
-# In[ ]:
+# In[93]:
 
 np.unique(diff, return_counts=True)
 
@@ -842,7 +842,7 @@ np.unique(diff, return_counts=True)
 #  - if both rating are 0.5 we put it in group 2
 #  - if both rating are between < 0.5 and > 0.5 we put it in group 3 
 
-# In[ ]:
+# In[94]:
 
 y_2 = []
 for rate1, rate2 in zip((y_possible['rater2']).values,(y_possible['rater1']).values):
@@ -856,26 +856,26 @@ for rate1, rate2 in zip((y_possible['rater2']).values,(y_possible['rater1']).val
         y_2.append(3)
 
 
-# In[ ]:
+# In[95]:
 
 np.unique(y_2, return_counts=True)
 
 
 # We see here that the third group actually is never selected.
 
-# In[ ]:
+# In[96]:
 
 x_train, x_test, y_train, y_test = train_test_split(x, y_2, test_size=0.2, random_state=4)
 
 
 # We use the best parameters we found before.
 
-# In[ ]:
+# In[97]:
 
 rfc = RFC(max_features=max_features_b, n_estimators=n_estimators_b, n_jobs=-1)
 
 
-# In[ ]:
+# In[98]:
 
 scores = cross_val_score(rfc, x, y, cv=10, scoring='accuracy')
 show_score(scores)
@@ -883,20 +883,20 @@ show_score(scores)
 
 # Here accuracy has not changed from before. Let's look at the confusion matrix.
 
-# In[ ]:
+# In[99]:
 
 # Prep of training and testing sets
 x_train, x_test, y_train, y_test = train_test_split(x, y_2, test_size=0.2, random_state=4)
 
 
-# In[ ]:
+# In[100]:
 
 # Do prediction for test values
 rfc.fit(x_train, y_train)
 y_pred = rfc.predict(x_test)
 
 
-# In[ ]:
+# In[101]:
 
 # Let's compute the convolution matrix
 confusion_mx = metrics.confusion_matrix(y_test, y_pred)
@@ -905,30 +905,30 @@ confusion_mx
 
 # With the confusion matrix, the first problem we see is that their was **no prediction for the class 2**. The second is that there is a lot of false positives and the actual sensitivity is :
 
-# In[ ]:
+# In[102]:
 
 confusion_mx[1,1] / (confusion_mx[0,1]  + confusion_mx[1,1] +confusion_mx[2,1])
 
 
 # Which is worse than what we had before.
 
-# ### last solution, change the threshold position
+# ### Last solution, change the threshold position
 
-# The intuition for this change is that we know that our classifier is better at predicting "lighter" players, therefore increasing the considered "light" players we should get better results in terms of accuracy. 
+# The intuition for this change is that we know our classifier is better at predicting "lighter" players, therefore increasing the considered "light" players we should get better results in terms of accuracy. 
 
-# In[ ]:
+# In[103]:
 
 y_3 = ((y_possible['rater1'] + y_possible['rater2']) / 2 <= 0.5).values
 
 
-# In[ ]:
+# In[104]:
 
 x_train, x_test, y_train, y_test = train_test_split(x, y_3, test_size=0.2, random_state=4)
 
 
 # We know this is the best result we have, so let's find the best parameters we can.
 
-# In[ ]:
+# In[105]:
 
 prop1 = np.sum(y_3) / len(y_3)
 prop0 = 1 - prop1
@@ -938,17 +938,17 @@ class_weights = {
 }
 
 
-# In[ ]:
+# In[106]:
 
 prop1
 
 
-# In[ ]:
+# In[107]:
 
 rfc = RFC(n_estimators=10, max_features="sqrt", n_jobs=-1, class_weight=class_weights)
 
 
-# In[ ]:
+# In[108]:
 
 n_estimators_range = list(range(20,40))
 max_features_range = ["sqrt", "log2"]
@@ -958,52 +958,52 @@ param_dist = dict(n_estimators=n_estimators_range,
                  max_depth=max_depth_range)
 
 
-# In[ ]:
+# In[109]:
 
 rand = RandomizedSearchCV(rfc, param_dist, cv=20, scoring='roc_auc', n_iter=20, random_state=5)
 rand.fit(x, y_3)
 
 
-# In[ ]:
+# In[110]:
 
 #removed as not relevant and screen clutering if you're interested uncomment it
 #rand.cv_results_
 
 
-# In[ ]:
+# In[111]:
 
 rand.best_params_
 
 
-# In[ ]:
+# In[112]:
 
 rand.best_score_
 
 
-# In[ ]:
+# In[113]:
 
 max_features_b = rand.best_params_["max_features"]
 n_estimators_b = rand.best_params_["n_estimators"]
 max_depth_b = rand.best_params_["max_depth"]
 
 
-# In[ ]:
+# In[114]:
 
 rfc = RFC(max_depth=max_depth_b, max_features=max_features_b, n_estimators=n_estimators_b, n_jobs=-1, class_weight=class_weights)
 
 
-# In[ ]:
+# In[115]:
 
 test_rfc_complete(rfc, x, y_3)
 
 
-# Ok here we have it, the best result we had so far. The AUC score is higher than ever before (~77%) ! With an accuracy of 85% we are also above all previously done tests. But if we look at specificity, it's not really better than before. However knowing the AUC score we know we can find a good compromise between the two. 
+# Ok here it is, the best result we had so far. The AUC score is higher than ever before (~77%) ! With an accuracy of 85% we are also above all previously done tests. But if we look at specificity, it's not really better than before. However knowing the AUC score we know we can find a good compromise between the two. 
 
 # # Feature importance !
 
 # Let's look at the feature importance in our (for now) best classifier.
 
-# In[ ]:
+# In[116]:
 
 feature_names = x.columns.values
 rfc.fit(x, y)
@@ -1011,27 +1011,27 @@ a = list(zip(feature_names, rfc.feature_importances_))
 sorted(a, key=lambda x: -x[1])
 
 
-# What we expected to see was that the features league country and club be an important factor. For example some clubs / country might be more inclined in having lighter players than another.
+# We expected the features "league country" and "club" to be important factors. For example some clubs / countries might be more inclined in having lighter players than another.
 # 
-# We surely did not expect the seExp and seMean be a factor if cards were not either. The algorithm could have associated a high meanExp with a lot of cards with a lot of matches with unfair referees. But that doesn't seem to be the case here.
+# We surely did not expect the seExp and seMean be a factor if cards were not either. The algorithm could have associated a high meanExp with a lot of cards with a lot of matches with unfair referees, but that doesn't seem to be the case here.
 # 
 # As we don't know why they are so important why don't we remove se\* and mean\*.
 
-# In[ ]:
+# In[117]:
 
 x1 = x.drop(["meanExp", "meanIAT", "seIAT", "seExp"], axis=1)
 
 
 # First we need to know how well the classifier does now.
 
-# In[ ]:
+# In[118]:
 
 test_rfc_complete(rfc, x1, y)
 
 
 # As we can see this is a very bad prediction... so they must be important in a way.
 
-# In[ ]:
+# In[119]:
 
 feature_names = x1.columns.values
 rfc.fit(x1, y)
@@ -1039,23 +1039,23 @@ a = list(zip(feature_names, rfc.feature_importances_))
 sorted(a, key=lambda x: -x[1])
 
 
-# Now we will remove some of the worst feature, which were certainly add variance therefore overfitting to our model. If one of our intuition was right (about the cards) we should have a change of feature importance by removing the card information.
+# Now we will remove some of the worst features, which were certainly adding variance therefore overfitting to our model. If one of our intuition was right (about the cards) we should have a change of feature importance by removing the card information.
 
-# In[ ]:
+# In[120]:
 
 x2 = x.drop(["redCards", "yellowReds"], axis=1)
 
 
-# In[ ]:
+# In[121]:
 
 test_rfc_complete(rfc, x2, y)
 
 
-# This new version of the classifier does a pretty good yob with our first y (with 1 = mean(r1,r2) < 0.5)
+# This new version of the classifier does a pretty good job with our first y (with 1 = mean(r1,r2) < 0.5)
 # 
 # Let's look at feature importance again :
 
-# In[ ]:
+# In[122]:
 
 feature_names = x2.columns.values
 rfc.fit(x2, y)
@@ -1063,35 +1063,35 @@ a = list(zip(feature_names, rfc.feature_importances_))
 sorted(a, key=lambda x: -x[1])
 
 
-# We don't really see a change in the features we wanted to. But one feature clearly dropped down in importance : yellow cards. Wierdly enough what happens next is awesome.
+# We don't really see a change in the features we wanted to, but one feature clearly dropped down in importance : yellow cards. Weirdly enough what happens next is awesome.
 # 
 # First let's remove one of the less valuable features
 
-# In[ ]:
+# In[123]:
 
 x3 = x2.drop(["leagueCountry"], axis=1)
 
 
-# In[ ]:
+# In[124]:
 
 test_rfc_complete(rfc, x3, y)
 
 
 # we clearly see a drop in AUC and F1 score, now what happens if we remove yellow cards ?
 
-# In[ ]:
+# In[125]:
 
 x4 = x2.drop(["yellowCards"], axis=1)
 
 
-# In[ ]:
+# In[126]:
 
 test_rfc_complete(rfc, x3, y)
 
 
 # As we can see the drop in AUC score is less than the one above ! 
 
-# In[ ]:
+# In[127]:
 
 train_sizes, train_scores, test_scores = learning_curve(rfc, x4, y, cv=20, n_jobs=-1)
 train_scores_mean = np.mean(train_scores, axis=1)
@@ -1110,24 +1110,24 @@ plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
 
 # As we were asked let's show the learning curves for our best estimator
 
-# In[ ]:
+# In[128]:
 
 y = y_3
 
 
-# In[ ]:
+# In[129]:
 
 rfc = RFC(max_depth=max_depth_b, max_features=max_features_b, n_estimators=n_estimators_b, n_jobs=-1, class_weight=class_weights)
 
 
-# In[ ]:
+# In[130]:
 
 train_sizes, train_scores, test_scores = learning_curve(rfc, x, y, cv=20, n_jobs=-1)
 train_scores_mean = np.mean(train_scores, axis=1)
 test_scores_mean = np.mean(test_scores, axis=1)
 
 
-# In[ ]:
+# In[131]:
 
 plt.figure()
 plt.xlabel("Training examples")
@@ -1140,7 +1140,7 @@ plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
 
 # Let's now look at what the change of some parameters does to the curves :
 
-# In[ ]:
+# In[132]:
 
 for i,max_depth in enumerate(range(1, 16, 2)):
     rfc = RFC(max_features=max_features_b, n_estimators=n_estimators_b, max_depth=max_depth, n_jobs=-1, class_weight=class_weights)
@@ -1166,7 +1166,7 @@ plt.show()
 # 
 # Of course this is not the case for all parameters, let's look at n_estimators for example.
 
-# In[ ]:
+# In[133]:
 
 for i,n_estimators in enumerate(range(109, 139, 4)):
     rfc = RFC(max_depth=max_depth_b, max_features=max_features_b, n_estimators=n_estimators, n_jobs=-1, class_weight=class_weights)
@@ -1186,9 +1186,4 @@ for i,n_estimators in enumerate(range(109, 139, 4)):
     plt.legend()
     
 plt.show()
-
-
-# In[ ]:
-
-
 
