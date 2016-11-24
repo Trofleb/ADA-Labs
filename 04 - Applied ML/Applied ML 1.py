@@ -1106,10 +1106,9 @@ plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
          label="Cross-validation score")
 
 
-# In[ ]:
+# # Conclusion
 
-
-
+# As we have seen through the whole notebook, due to the high proportion of white players, the prediction are fluctuating around this point and could not produce any significant results. Therefore we could not find any effective evidence of an existing skin color - card biais.  
 
 # # Learning curves ! ( Bonus )
 
