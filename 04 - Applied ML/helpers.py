@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import metrics
+import pandas as pd
 import datetime
 
 from sklearn.preprocessing import LabelEncoder
@@ -23,13 +24,14 @@ def clean_data(df):
 
 def group_data(df):
     # We only keep what we think are relevant columns.
-    df_filtered = df[["playerShort","club", "leagueCountry", "height", "weight", "position", "games", "victories", 
+    df_filtered = df[["playerShort","club", "birthday", "leagueCountry", "height", "weight", "position", "games", "victories", 
                  "ties", "defeats", "goals", "yellowCards", "yellowReds", "redCards",
                  "rater1", "rater2", "meanIAT", "seIAT", "meanExp", "seExp"]]
     
     df_grouped = df_filtered.groupby("playerShort").agg({
         "club": lambda x: x.unique()[0],
         "leagueCountry": lambda x: x.unique()[0],
+        "birthday": lambda x: x.unique()[0],
         "height": np.max,
         "weight": np.max,
         "position": lambda x: x.unique()[0],
@@ -68,7 +70,7 @@ def prep_ML(df):
     encodeLabels("leagueCountry", df)
     
     today = datetime.datetime.now()
-    df_grouped.birthday = df_grouped.birthday.apply(lambda x : (today - pd.to_datetime(x)).days)
+    df.birthday = df.birthday.apply(lambda x : (today - pd.to_datetime(x)).days)
     
     for feature, col in df.iteritems():
         has_nan = True in col.isnull().unique()
