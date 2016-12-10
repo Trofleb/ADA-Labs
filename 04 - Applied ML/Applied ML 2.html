@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Lab4 - Applied ML</title>
+<title>Applied ML 2</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11748,16 +11748,1149 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">metrics</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./CrowdstormingDataJuly1st.csv&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">clean_data</span><span class="p">,</span> <span class="n">group_data</span><span class="p">,</span> <span class="n">prep_ML</span><span class="p">,</span> <span class="n">normalize</span>
+<span class="n">dfc</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">dfg</span> <span class="o">=</span> <span class="n">group_data</span><span class="p">(</span><span class="n">dfc</span><span class="p">)</span>
+<span class="n">X_p</span><span class="p">,</span><span class="n">y_possible</span> <span class="o">=</span> <span class="n">prep_ML</span><span class="p">(</span><span class="n">dfg</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_p</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># We use our best version of the previous part.</span>
+<span class="n">label_true</span> <span class="o">=</span> <span class="p">((</span><span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">y_possible</span><span class="p">[</span><span class="s1">&#39;rater2&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.5/dist-packages/sklearn/utils/validation.py:429: DataConversionWarning: Data with input dtype int64 was converted to float64 by the normalize function.
+  warnings.warn(msg, _DataConversionWarning)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First let's try the k-means algorithm with 2 clusters and print out the silhouette score:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>FYI: n_jobs = 1 because the parallel version of k-means doesn't work on OSX.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">km</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=600,
+    n_clusters=2, n_init=10, n_jobs=1, precompute_distances=&#39;auto&#39;,
+    random_state=None, tol=0.0001, verbose=0)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s1 =&quot;</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>s1 = 0.253540740782
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">test_km</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+    <span class="n">km</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+    <span class="k">return</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We know that the most valuable feature is the seIAT therefore we will remove it (just for fun)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">compute_feature_importance_rfc</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span> <span class="k">as</span> <span class="n">RFC</span>
+
+<span class="c1"># From previous exercice</span>
+
+<span class="n">prop1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">label_true</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_true</span><span class="p">)</span>
+<span class="n">prop0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prop1</span>
+<span class="n">class_weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="n">prop0</span><span class="p">,</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="n">prop1</span>
+<span class="p">}</span>
+
+<span class="n">best_results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
+
+<span class="n">rfc</span> <span class="o">=</span> <span class="n">RFC</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">],</span> <span class="n">max_features</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;max_features&quot;</span><span class="p">],</span> <span class="n">n_estimators</span><span class="o">=</span><span class="n">best_results</span><span class="p">[</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span><span class="p">)</span>
+<span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.1192076761662911),
+ (&#39;meanExp&#39;, 0.11535965082301609),
+ (&#39;seExp&#39;, 0.11150842886559237),
+ (&#39;meanIAT&#39;, 0.089507460738880468),
+ (&#39;games&#39;, 0.060907841239402016),
+ (&#39;yellowCards&#39;, 0.060738748097005794),
+ (&#39;birthday&#39;, 0.053452685400786543),
+ (&#39;victories&#39;, 0.052951434426624096),
+ (&#39;ties&#39;, 0.051097570820641744),
+ (&#39;goals&#39;, 0.043814371663238164),
+ (&#39;defeats&#39;, 0.037644758289615075),
+ (&#39;position&#39;, 0.035497059910240741),
+ (&#39;club&#39;, 0.032691467561180215),
+ (&#39;weight&#39;, 0.031075560051553593),
+ (&#39;redCards&#39;, 0.030116507195549827),
+ (&#39;height&#39;, 0.029678838337128463),
+ (&#39;leagueCountry&#39;, 0.029279799091059617),
+ (&#39;yellowReds&#39;, 0.015470141322194092)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;seIAT&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s2 =&quot;</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s2 - s1 =&quot;</span><span class="p">,</span> <span class="n">s2</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>s2 = 0.264064546624
+s2 - s1 = 0.0105238058419
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have a better classification... that's fun !</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok now let's remove a second feature, we will follow the same intuition as before and remove the second best feature</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we know from before that the mean_Exp and goal information is at position 8, and 7 respectively in the X array</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seIAT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s3 =&quot;</span><span class="p">,</span> <span class="n">s3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s3 - s1 =&quot;</span><span class="p">,</span> <span class="n">s3</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s3 - s2 =&quot;</span><span class="p">,</span> <span class="n">s3</span> <span class="o">-</span> <span class="n">s2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>s3 = 0.266082409217
+s3 - s1 = 0.0125416684348
+s3 - s2 = 0.00201786259294
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is an even better improvement</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we now remove seExp in addition to the other 2 (3rd best feature)</span>
+<span class="n">X4</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;meanExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seExp&quot;</span><span class="p">,</span> <span class="s2">&quot;seIAT&quot;</span><span class="p">,</span> <span class="s2">&quot;meanIAT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s4</span> <span class="o">=</span> <span class="n">test_km</span><span class="p">(</span><span class="n">X4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 =&quot;</span><span class="p">,</span> <span class="n">s4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 - s1 =&quot;</span><span class="p">,</span> <span class="n">s4</span> <span class="o">-</span> <span class="n">s1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 - s2 =&quot;</span><span class="p">,</span> <span class="n">s4</span> <span class="o">-</span> <span class="n">s2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s4 - s3 =&quot;</span><span class="p">,</span> <span class="n">s4</span> <span class="o">-</span> <span class="n">s3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>s4 = 0.290107346202
+s4 - s1 = 0.0365666054193
+s4 - s2 = 0.0260427995774
+s4 - s3 = 0.0240249369845
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To see whether the clustering is close to a dark/light separation we will compute in addition to the silhouette the adjusted mutual info score</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">scoring_complete</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">km</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;silhouette score :&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;closeness to true label score :&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">adjusted_mutual_info_score</span><span class="p">(</span><span class="n">label_true</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.253540740782
+closeness to true label score : -0.000485621163783
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scoring_complete</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.264064546624
+closeness to true label score : -0.000484796987391
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we see that eventhough the silhouette score is better our label accuracy is the same as before.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Other examples :</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scoring_complete</span><span class="p">(</span><span class="n">X3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.266082409217
+closeness to true label score : -0.000482821657274
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scoring_complete</span><span class="p">(</span><span class="n">X4</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.289771659077
+closeness to true label score : -0.000186755446396
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's remove the worst features for example the red / yellow / redYellow / cards (not all are the absolute worsts but they all were in the &lt; 0.05 importance in the previous exercice.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X5</span> <span class="o">=</span>  <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;yellowReds&quot;</span><span class="p">,</span> <span class="s2">&quot;redCards&quot;</span><span class="p">,</span> <span class="s2">&quot;yellowCards&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X5</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.283747370182
+closeness to true label score : 0.00499147512141
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have good results ! The silhouette is better, and closeness is much better</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's now remove all the features that have the worst feature importance until our closeness score drops significantly</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X5</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.13849534362108062),
+ (&#39;meanExp&#39;, 0.10835464871535683),
+ (&#39;seExp&#39;, 0.10555781825842103),
+ (&#39;meanIAT&#39;, 0.094494815415764627),
+ (&#39;victories&#39;, 0.077655344122097014),
+ (&#39;birthday&#39;, 0.06951269778038037),
+ (&#39;games&#39;, 0.062332242521145602),
+ (&#39;ties&#39;, 0.056592918598599544),
+ (&#39;goals&#39;, 0.051770081133035405),
+ (&#39;defeats&#39;, 0.045579878128750029),
+ (&#39;height&#39;, 0.042976406135540407),
+ (&#39;club&#39;, 0.041034433406836525),
+ (&#39;weight&#39;, 0.040390915704725652),
+ (&#39;leagueCountry&#39;, 0.035672655901709094),
+ (&#39;position&#39;, 0.029579800556557245)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X6</span> <span class="o">=</span>  <span class="n">X5</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;leagueCountry&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X6</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.347447009627
+closeness to true label score : 0.00424424095901
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span><span class="n">X6</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.16139115280717553),
+ (&#39;meanExp&#39;, 0.1294132177483733),
+ (&#39;meanIAT&#39;, 0.11383730697347309),
+ (&#39;seExp&#39;, 0.11223431480452559),
+ (&#39;victories&#39;, 0.089413755620049495),
+ (&#39;club&#39;, 0.070465718296803648),
+ (&#39;games&#39;, 0.066548709948347495),
+ (&#39;birthday&#39;, 0.064472033427266207),
+ (&#39;ties&#39;, 0.05917840847567693),
+ (&#39;goals&#39;, 0.052610381942177653),
+ (&#39;defeats&#39;, 0.043455220491093786),
+ (&#39;weight&#39;, 0.03697977946503727)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X7</span> <span class="o">=</span>  <span class="n">X6</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;defeats&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X7</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.565611585424
+closeness to true label score : 0.0817211263061
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X7</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.13976230977649784),
+ (&#39;seExp&#39;, 0.13517318650270735),
+ (&#39;meanIAT&#39;, 0.13327805837383366),
+ (&#39;meanExp&#39;, 0.12941877459761422),
+ (&#39;games&#39;, 0.07913355014180215),
+ (&#39;victories&#39;, 0.074340973526954859),
+ (&#39;birthday&#39;, 0.068952605186483884),
+ (&#39;club&#39;, 0.066543058871073882),
+ (&#39;goals&#39;, 0.064623112132487795),
+ (&#39;ties&#39;, 0.05763911475542579),
+ (&#39;weight&#39;, 0.051135256135118511)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X8</span> <span class="o">=</span>  <span class="n">X7</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;weight&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X8</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.553357594614
+closeness to true label score : 0.090802477
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X8</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.15653694319775782),
+ (&#39;meanExp&#39;, 0.15291797030087717),
+ (&#39;seExp&#39;, 0.13646924598897103),
+ (&#39;meanIAT&#39;, 0.12573211742991902),
+ (&#39;victories&#39;, 0.098342254953741812),
+ (&#39;birthday&#39;, 0.078376670022084524),
+ (&#39;games&#39;, 0.078069292179089769),
+ (&#39;club&#39;, 0.061049873548434608),
+ (&#39;ties&#39;, 0.056684304889594778),
+ (&#39;goals&#39;, 0.055821327489529518)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X9</span> <span class="o">=</span>  <span class="n">X8</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;ties&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X9</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.576040825545
+closeness to true label score : 0.0930262765814
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X9</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.17772056636542932),
+ (&#39;meanIAT&#39;, 0.14308682374825898),
+ (&#39;seExp&#39;, 0.13391029921145123),
+ (&#39;meanExp&#39;, 0.12824459866513904),
+ (&#39;games&#39;, 0.094228699692052068),
+ (&#39;goals&#39;, 0.086349794830141741),
+ (&#39;birthday&#39;, 0.085176128243323421),
+ (&#39;club&#39;, 0.081872932616398622),
+ (&#39;victories&#39;, 0.06941015662780553)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X10</span> <span class="o">=</span>  <span class="n">X9</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;goals&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.635972691467
+closeness to true label score : 0.0905806182631
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X10</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.17241641142613112),
+ (&#39;meanIAT&#39;, 0.15236054729126522),
+ (&#39;meanExp&#39;, 0.14215875796079641),
+ (&#39;seExp&#39;, 0.13891188173080843),
+ (&#39;victories&#39;, 0.1283310002888173),
+ (&#39;games&#39;, 0.10729793126070607),
+ (&#39;club&#39;, 0.081398434656610105),
+ (&#39;birthday&#39;, 0.077125035384865315)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X11</span> <span class="o">=</span>  <span class="n">X10</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;club&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X11</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.682393276867
+closeness to true label score : 0.0905806182631
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X11</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;seIAT&#39;, 0.18571776836661069),
+ (&#39;meanExp&#39;, 0.18107576657489094),
+ (&#39;meanIAT&#39;, 0.16215291360509357),
+ (&#39;seExp&#39;, 0.14941803548140886),
+ (&#39;victories&#39;, 0.11935634725197533),
+ (&#39;games&#39;, 0.1065985292509703),
+ (&#39;birthday&#39;, 0.095680639469050255)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X12</span> <span class="o">=</span>  <span class="n">X11</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;birthday&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X12</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.687036611032
+closeness to true label score : 0.0905806182631
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">compute_feature_importance_rfc</span><span class="p">(</span><span class="n">rfc</span><span class="p">,</span> <span class="n">X12</span><span class="p">,</span> <span class="n">label_true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;meanExp&#39;, 0.20983983089746389),
+ (&#39;seExp&#39;, 0.18324839774095397),
+ (&#39;seIAT&#39;, 0.17447977591259306),
+ (&#39;meanIAT&#39;, 0.15285153992997086),
+ (&#39;games&#39;, 0.14759487436343),
+ (&#39;victories&#39;, 0.13198558115558826)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X13</span> <span class="o">=</span>  <span class="n">X12</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;victories&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scoring_complete</span><span class="p">(</span><span class="n">X13</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>silhouette score : 0.730033265353
+closeness to true label score : 0.0966882724244
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Removing more gives worse results or equal results.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
